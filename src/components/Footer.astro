@@ -1,18 +1,17 @@
 ---
 const year = new Date().getFullYear();
+
+import SocialList from "@/components/SocialList";
 ---
 
+
 <footer>
-	<div>
-		Copyright &copy; {year}
-		<span aria-label="rocket emoji">🚀</span>
-		Astro Cactus
-	</div>
 	<nav aria-label="More on this site">
 		<a href="/">Home</a>
-		<a href="/about">About</a>
+		<a href="/about">About Me</a>
 		<a href="/posts">Blog</a>
 	</nav>
+	<SocialList />
 </footer>
 
 <style>

@@ -22,9 +22,32 @@
 		--theme-menu-bg: hsl(210 6.5% 12.2% / 0.85);
 	}
 
+	li {
+		margin: 2%;
+	}
+
 	html {
 		@apply h-full border-t-2 border-textColor scroll-smooth;
 	}
+
+			a {
+				@apply px-4 py-2 sm:py-0 sm:px-2 sm:hover:text-textColor sm:hover:underline;
+			}
+
+   /* unvisited link */
+a:link {
+  color: #535254;
+}
+
+/* visited link */
+a:visited {
+  color: #615f5f;
+}
+
+/* selected link */
+a:active {
+  color: #000000;
+} 
 
 	html body {
 		@apply h-full max-w-3xl mx-auto px-8 pt-16 font-mono font-normal antialiased text-sm flex flex-col text-textColor bg-bgColor;
