@@ -42,7 +42,7 @@
     "tailwindcss": "^3.1.8",
     "typescript": "^4.8.2"
   },
-  "description": "<p align=\"center\">\r   <img alt=\"Astro Theme Cactus logo\" src=\"./public/images/astro-theme-cactus.png\" width=\"70\" />\r </p>\r <h1 align=\"center\">\r   Astro Theme Cactus 🚀🌵\r </h1>",
+  "description": "<h1>Milan Lustig's Portfolio and Blog</h1>",
   "main": ".eslintrc.js",
   "repository": {
     "type": "git",
