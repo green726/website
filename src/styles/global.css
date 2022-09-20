@@ -27,7 +27,7 @@
 	}
 
 	html {
-		@apply h-full border-t-2 border-textColor scroll-smooth;
+		@apply h-full border-t-0 border-textColor scroll-smooth;
 	}
 
 			a {
