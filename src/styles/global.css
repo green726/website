@@ -48,7 +48,6 @@ a:visited {
 a:active {
   color: #000000;
 } 
-
 	html body {
 		@apply h-full max-w-3xl mx-auto px-8 pt-16 font-mono font-normal antialiased text-sm flex flex-col text-textColor bg-bgColor;
 	}
