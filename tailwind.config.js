@@ -89,10 +89,10 @@ module.exports = {
 						"&:hover": {
 							"@apply sm:after:h-0.5 sm:after:bg-link": {},
 						},
-						"&::after": {
-							"@apply absolute bottom-0 inset-x-0 block content-[''] h-[1px] bg-textColor motion-safe:transition-height ease-in-out":
-								{},
-						},
+						// "&::after": {
+						// 	"@apply absolute bottom-0 inset-x-0 block content-[''] h-[1px] bg-textColor motion-safe:transition-height ease-in-out":
+						// 		{},
+						// },
 					},
 				},
 				".title": {

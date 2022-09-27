@@ -29,10 +29,9 @@
 	html {
 		@apply h-full border-t-0 border-textColor scroll-smooth;
 	}
-
-			a {
-				@apply px-4 py-2 sm:py-0 sm:px-2 sm:hover:text-textColor sm:hover:underline;
-			}
+	a {
+	    @apply px-4 py-2 sm:py-0 sm:px-2 sm:hover:text-textColor sm:hover:underline;
+	}
 
    /* unvisited link */
 a:link {

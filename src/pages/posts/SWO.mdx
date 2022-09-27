@@ -3,7 +3,7 @@ layout: "@/layouts/BlogPost"
 title: SWO - A Compiled Language
 publishDate: 19 September 2022
 description: Have you ever wondered how programming languages worked? So did I, and that is why I decided to create my own compiled language, SWO.
-tags: ["SWO"]
+tags: ["swo", "compiler"]
 ---
 # Overview
     In this post, I go over some of the early development of SWO, as well as what building your own compiled language entails. Since there are many tutorials on compilers out there, instead of having this post be a generic tutorial, I have decided to gear it broader to my concept if and general development of my language.
@@ -41,13 +41,16 @@ tags: ["SWO"]
 ## The Parser
     This is by far the largest (and most complex) component of SWO, and any language. The parser takes the tokens created by the lexer, and turns them into an AST (Abstract Syntax Tree). An AST is a high level representation of the strucutre of a programming language. Here is a pseudocode representation of what one might look like:
     
-    ### Code:
+    Code:
+    ```c
     while (i < 10) {
         printf("%d", i);
         i++;
     }
+    ```
 
-    ### AST:
+    AST:
+    ```js
     while loop {
         condition { variable { name = i } less than number { value = 10 } }
         body {
@@ -63,6 +66,7 @@ tags: ["SWO"]
 
         }
     }
+    ```
     
     As you can see, the parser will convert high level code into its base components and represent them as a tree data structure. 
 
