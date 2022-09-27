@@ -28,3 +28,48 @@ tags: ["SWO"]
         * This website contains examples on what certain high level language components look like in LLVM IR and thus was very helpful for the IR generation component of SWO.
     * [A Complete Guide to LLVM](https://mukulrathi.com/create-your-own-programming-language/llvm-ir-cpp-api-tutorial/)
         * Here you can find a very broad (and helpful) overview of LLVM and how you can use it to create your own compiler. I found this useful for some of the specific API functions as well as general information on LLVM IR
+
+# The Language
+    Seeing as this project exists for me solely to be fun and act as a learning experience, I did not have any concrete ideas as to what I wanted SWO to look like when I first began development. I decided that SWO needed to have a "gimmick" and spent several months trying to come up with ideas. First, I settled on making a compiler with syntax configurable through TOML files, but soon realized that this idea merely added work for myself with little gain. Currently, I still am unsure of what the gimmick should be. I have toyed with the idea of making it a stack only allocated functional language. In theory, this could eliminate the need for garbage collection or manual memory management. However, currently, I am unsure if this is feasible or even worth it. 
+
+    The SWO language (in its current state) is essentially a worse version of C. The language supports functions (returning, arguments, etc), variables (globals, locals, arrays), structs, references and dereferences, if statements, and for loops. I plan to add generics, functions as types, anonymous functions, and macros. I wish to get SWO to a point at which I can bootstrap it, and thus, that is my far off goal. 
+
+# The Compiler
+    The SWO compiler is made up of 3 major components, a lexer (tokenizer), a parser, and a code generator. Each component serves its own function and integrates with the others to produce runnable programs.
+
+## The Lexer
+    The lexer, also known as a tokenizer, takes in the raw input from a file and turns it into "tokens". While technically unnecessary, this piece simplifies the next component, the parser.
+
+## The Parser
+    This is by far the largest (and most complex) component of SWO, and any language. The parser takes the tokens created by the lexer, and turns them into an AST (Abstract Syntax Tree). An AST is a high level representation of the strucutre of a programming language. Here is a pseudocode representation of what one might look like:
+    
+    ### Code:
+    while (i < 10) {
+        printf("%d", i);
+        i++;
+    }
+
+    ### AST:
+    while loop {
+        condition { variable { name = i } less than number { value = 10 } }
+        body {
+            function call {
+                name = printf
+                arg #1 = string { value = %d }
+                arg #2 = variable { name = i }
+            }
+            variable assignment {
+                target = variable { name = i }
+                final = binary expression { left hand side = {variable { name = 1} } right hand side = number { value = 1 } operator = + }
+            }
+
+        }
+    }
+    
+    As you can see, the parser will convert high level code into its base components and represent them as a tree data structure. 
+
+## The Generator
+    The code generator is the final piece of the SWO compiler. The code generator takes the AST from the parser, and using the LLVMSharp library, generates LLVM IR code from the SWO code. The generation step essentially transpiles the SWO code into LLVM IR. This generated LLVM IR is then optimized and compiled down into object code which can then be linked into an executable. 
+
+# Conclusion
+    While it may seem like a daunting task, writing your own programming language is a feasible project for many developers. Not only is it a realistic and attainable goal, but one that will teach you many things and take you on a fun and interesting journey. 
