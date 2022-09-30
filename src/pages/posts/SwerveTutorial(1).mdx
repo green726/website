@@ -15,14 +15,17 @@ Writing code for a swerve drive train can be difficult. This difficulty level in
 # What is Swerve Drive?
 Swerve drive is a form of drive train used in FRC robotics. It is generally regarded as the most complex drive train (to build, program, and drive); however, it is also considered to be the most agile. For this to happen, swerve drive utilizes a four-wheel configuration. This four wheel configuration is by no means standard, however. Each wheel (or "module" as they are reffered to) has two seperate motors. One motor is used to drive the wheel (rotate it vertically), while the other motor is used to control the angle of the wheel (rotate it horizontally). This allows each wheel to independently rotate, and drive in any direction. This comes together and not only allows the robot to deftly translate and rotate, but do both at the same time. "But wait, isn't that just mecanum?". Yes, swerve drive offers similar capabiites, however, it also offers increased speed, mobility, and traction. The sole downside of swerve drive (other than its complexity) is its lack of traction/power when compared to tank drive. In short: don't get into a ramming contest with a swerve drive robot - the swerve drive will lose. 
 # Components of Swerve
-Swerve drive has three major components:
-## Train
+Swerve drive has three major components that you will learn to program throughout the course of this tutorial:
 ## Module
+The simplest (and lowest level) piece of swerve drive. This controls each individual module's (wheel) turning and driving. These are all orchestrated together by the drive train. 
+## Train
+The "conductor" for the modules. This component will control each module and make sure they work together to move the robot in the correct direction. This component also handles user input. 
 ## Odometry
-Througout the course of this tutorial, you will learn how to program each one.
+The odometry is the most complex piece of the swerve drive train. This component uses wheel angles and rotations to track the robot's position on the field. This is generally a more accurate tracking method than an accelerometer. While technically optional, if you want a PID corrected teleoperated mode or a dynamic autonomous mode, it will be necessary. 
 # Prerequisite Knowledge
 Below you can find some quick descriptions on some prerequsite knowledge (most -> least important) for this tutorial series. 
 ## Vector Math
 ## PID Loops / Controllers
 ## Feed Forward Loops / Controllers
 ## Java Concepts
+
