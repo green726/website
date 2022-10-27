@@ -6,3 +6,14 @@ description: The Swerve Module
 tags: ["swerve-drive", "tutorial"]
 draft: true
 ---
+# Overview
+In this post, I will begin my FRC swerve drive tutorial series and demonstrate the programming of a single FRC swerve drive module.
+
+# What is a Module?
+A "module", in the context of a swerve drive, refers to the various motors, gears, and encoders that control a single wheel. Generally, each module consits of two motors: one for driving the wheel, and one for turning it. In the past, modules were made up of Neo motors and generic 556 motors; however, the current gold standard is a dual Falcon 500 module. This is not cheap, as each Falcon 500 costs $180 (USD). This means that solely the MOTORS for a swerve drive can cost upwards of $1500 (USD). Due to this, many teams (including 2875) opt for a single Falcon 500 in each module. 
+
+### Why is the Falcon 500 So Good?
+The Falcon 500 is one of the most powerful motors used in FRC; however, that is only one of its many alluring qualities. The Falcon 500 has built-in encoders and a built-in Talon FX motor controller. This Talon FX is one of the best motor controllers available, and comes with PID controllers (calculations performed on the motor controller instead of the RoboRIO). The Talon FX also contains some motion profiled controllers. 
+
+# Code Setup
+Each module will be a Java class. This class will control the two motors for each wheel. 
