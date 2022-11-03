@@ -7,7 +7,7 @@ tags: ["swerve-drive", "tutorial"]
 draft: true
 ---
 # Overview
-In this post, I will begin my FRC swerve drive tutorial series and demonstrate the programming of a single FRC swerve drive module.
+In this post, I will begin my FRC swerve drive tutorial series and demonstrate the programming of a single FRC swerve drive module. You can find the full code for a module [here](https://github.com/CshCyberhawks/MiniSteve/blob/main/src/main/java/frc/robot/subsystems/SwerveWheel.java) (outdated; Java) or [here](https://github.dev/CshCyberhawks/KotlinMiniSteve/blob/develop/src/main/kotlin/frc/robot/subsystems/SwerveWheel.kt#L1) (updated; Kotlin). In this tutorial, I will not be giving all of the code; instead, I will focus more on the logic/theory behind swerve, and I encourage you to look at the CSHCyberhawks [GitHub](https://github.com/CshCyberhawks) for code examples. 
 
 # What is a Module?
 A "module", in the context of a swerve drive, refers to the various motors, gears, and encoders that control a single wheel. Generally, each module consits of two motors: one for driving the wheel, and one for turning it. In the past, modules were made up of Neo motors and generic 556 motors; however, the current gold standard is a dual Falcon 500 module. This is not cheap, as each Falcon 500 costs $180 (USD). This means that solely the MOTORS for a swerve drive can cost upwards of $1500 (USD). Due to this, many teams (including 2875) opt for a single Falcon 500 in each module. 
@@ -16,4 +16,35 @@ A "module", in the context of a swerve drive, refers to the various motors, gear
 The Falcon 500 is one of the most powerful motors used in FRC; however, that is only one of its many alluring qualities. The Falcon 500 has built-in encoders and a built-in Talon FX motor controller. This Talon FX is one of the best motor controllers available, and comes with PID controllers (calculations performed on the motor controller instead of the RoboRIO). The Talon FX also contains some motion profiled controllers. 
 
 # Code Setup
-Each module will be a Java class. This class will control the two motors for each wheel. 
+Each module will be a Java class. This class will control the two motors for each wheel. Depending on which motors you use, this code may vary slightly. We will begin by creating the variables for the motor controllers. 
+```
+public class SwerveModule {
+	TalonSRX turnMotor;
+	TalonFX driveMotor;
+}
+```
+For information on the specific libraries, please check the CTRE Phoenix and WPILib documentation. We will also include PID controller's for each motor. 
+```
+...
+PIDController turnPID;
+```
+If you use a Falcon500 for any motor, you do not need an additional PID controller as their TalonFX motor controllers have built in PIDs. You will need to tune these PIDs properly for the swerve drive to function. I reccommend following the manual tuning outlined on [Wikipedia](https://en.wikipedia.org/wiki/PID_controller#Manual_tuning) and/or the [Ziegler-Nichols method](https://en.wikipedia.org/wiki/PID_controller#Ziegler%E2%80%93Nichols_method). Next, I recommend creating various unit conversion methods to take in the raw encoder values for your wheels and converting it to a velocity in meters per second. 
+```
+    public double convertRPMToMeters(double rpm) {
+        double radius = 0.0505
+        return 2 * Math.PI * radius * (rps / 7)
+    }
+```
+This method will vary depending on gear ratio, motors/encoders used, and you module design. This is just an example of what one method might look like. After you have your fields and utility methods set up, we need to create the drive method.
+```
+public void drive(double desiredSpeed, double desiredAngle) {
+...
+}
+```
+This method will simply combine the feed forwards (raw inputs) and PID outputs for the driving and turning motors. The method can also optionally (I strongly reccommend this) optimize the wheel turning. This means that instead of fully rotating 180 degrees, the wheel will simply drive in the opposite direction (negate this speed). This makes the swerve drive significantly more efficient as well as makes it drive faster and smoother. This can be accomplished by a single if statement within the drive method. 
+```
+if (abs(angle - turnValue) > 90 && abs(angle - turnValue) < 270) {
+	angle = ((angle.toInt() + 180) % 360).toDouble()
+	speed = -speed
+}
+```
