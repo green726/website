@@ -23,7 +23,7 @@ module.exports = {
 					css: {
 						"--tw-prose-body": "var(--theme-text)",
 						"--tw-prose-headings": "var(--theme-accent-2)",
-						"--tw-prose-links": "var(--theme-text)",
+						"--tw-prose-links": "var(--theme-link)",
 						"--tw-prose-bold": "var(--theme-text)",
 						"--tw-prose-bullets": "var(--theme-text)",
 						"--tw-prose-quotes": "var(--theme-quote)",

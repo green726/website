@@ -16,7 +16,7 @@ A "module", in the context of a swerve drive, refers to the various motors, gear
 The Falcon 500 is one of the most powerful motors used in FRC; however, that is only one of its many alluring qualities. The Falcon 500 has built-in encoders and a built-in Talon FX motor controller. This Talon FX is one of the best motor controllers available, and comes with PID controllers (calculations performed on the motor controller instead of the RoboRIO). The Talon FX also contains some motion profiled controllers. 
 
 # Utility
-Throughout this series, there will be various mathematical operations re-used. Due to this, you should create some sort of a (static) "math utility" class. For examples of this, I suggest looking at 2875's updated [``MathClass``](https://github.com/CshCyberhawks/KotlinMiniSteve/blob/main/src/main/kotlin/frc/robot/util/MathClass.kt) in Kotlin, as our [Java](https://github.com/CshCyberhawks/MiniSteve/blob/main/src/main/java/frc/robot/util/MathClass.java) version is significantly outdated. For now, the only method you will need in it is ``wrapAroundAngles``. This method will convert a negative angle into its positive equivalent (-90 becomes 270, etc). 
+Throughout this series, there will be various mathematical operations re-used. Due to this, you should create some sort of a (static) "math utility" class. For examples of this, I suggest looking at 2875's updated [`MathClass`](https://github.com/CshCyberhawks/KotlinMiniSteve/blob/main/src/main/kotlin/frc/robot/util/MathClass.kt) in Kotlin, as our [Java](https://github.com/CshCyberhawks/MiniSteve/blob/main/src/main/java/frc/robot/util/MathClass.java) version is significantly outdated. For now, the only method you will need in it is `wrapAroundAngles`. This method will convert a negative angle into its positive equivalent (-90 becomes 270, etc). 
 ```java
 double wrapAroundAngles(double angle) {
 
@@ -36,14 +36,14 @@ public class SwerveModule {
 ```
 For information on the specific libraries, please check the CTRE Phoenix and WPILib documentation. 
 
-The ``TurnEncoder`` refers to a custom utility wrapper class around the WPILib ``AnalogInput`` class that I strongly recommend creating. Full example code for this wrapper class can be found [here](https://github.com/CshCyberhawks/MiniSteve/blob/main/src/main/java/frc/robot/util/TurnEncoder.java). The ``get`` method simply converts the encoders analog voltage signal into a degree reading. The math necessary to do this can be found on your encoder manufacturer's website. 
+The `TurnEncoder` refers to a custom utility wrapper class around the WPILib `AnalogInput` class that I strongly recommend creating. Full example code for this wrapper class can be found [here](https://github.com/CshCyberhawks/MiniSteve/blob/main/src/main/java/frc/robot/util/TurnEncoder.java). The `get` method simply converts the encoders analog voltage signal into a degree reading. The math necessary to do this can be found on your encoder manufacturer's website. 
 
 ```java
 ... - Constants.turnEncoderOffsets[encoderPort]
 ```
  This code subtracts a constant offset for each module from the encoder's reported angle. This serves the function of keeping the "0" angle at a set direction. To set this orientation for each module, you can simply remove this line of code (disable the offset), MANUALLY twist each module/wheel to face the desired direction, and set these raw(ish) encoder output values for each module into this dictionary. 
 
-We will also include PID controller's for each motor. In your constructor, you should call the PID's ``enableContinuousInput`` method for the turnPID. This allows the controller to manage "continuous" values such as angles where the value resets around a number (360 vs 0, 180 vs -180)
+We will also include PID controller's for each motor. In your constructor, you should call the PID's `enableContinuousInput` method for the turnPID. This allows the controller to manage "continuous" values such as angles where the value resets around a number (360 vs 0, 180 vs -180)
 ```java
 ...
 private PIDController turnPID;
@@ -91,9 +91,9 @@ if (!turnPidController.atSetpoint()) {
 
 }
 ```
-The ``if`` statement is used to enable a "tolerance" on the turning PID controller. This means that it will ignore small differences in measured and actual values. 2875 uses this due to encoder inconsistencies and noise, and so we allow a tolerance of 4 degrees on each turning PID. This value is higher than what I would suggest others use; however, 2875 found it worked acceptably. 
+The `if` statement is used to enable a "tolerance" on the turning PID controller. This means that it will ignore small differences in measured and actual values. 2875 uses this due to encoder inconsistencies and noise, and so we allow a tolerance of 4 degrees on each turning PID. This value is higher than what I would suggest others use; however, 2875 found it worked acceptably. 
 
-I suggest you also create a method to "preserve" the module's angle when given no input. This method will be used later on in the drive train to ensure each module does not attempt to reset its angle to 0 degrees when given no input. This method should call our ``drive`` method with inputs of 0, and the previous angle fed into the drive method. This means that we will need to add an extra private variable to our class whose purpose is to store the previously set angle. 
+I suggest you also create a method to "preserve" the module's angle when given no input. This method will be used later on in the drive train to ensure each module does not attempt to reset its angle to 0 degrees when given no input. This method should call our `drive` method with inputs of 0, and the previous angle fed into the drive method. This means that we will need to add an extra private variable to our class whose purpose is to store the previously set angle. 
 ```java
 ...
 private double previousAngle = 0;
