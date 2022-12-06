@@ -1,10 +1,10 @@
 ---
 layout: "@/layouts/BlogPost"
 title: FRC Swerve Drive Tutorial - Part 2
-publishDate: 24 October 2022
+publishDate: 6 December 2022
 description: The Swerve Module
 tags: ["swerve-drive", "tutorial"]
-draft: true
+draft: false
 ---
 # Overview
 In this post, I will begin my FRC swerve drive tutorial series and demonstrate the programming of a single FRC swerve drive module. You can find the full code for a module [here](https://github.com/CshCyberhawks/MiniSteve/blob/main/src/main/java/frc/robot/subsystems/SwerveWheel.java) (outdated; Java) or [here](https://github.dev/CshCyberhawks/KotlinMiniSteve/blob/develop/src/main/kotlin/frc/robot/subsystems/SwerveWheel.kt#L1) (updated; Kotlin). In this tutorial, I will not be giving all of the code; instead, I will focus more on the logic/theory behind swerve, and I encourage you to look at the CSHCyberhawks [GitHub](https://github.com/CshCyberhawks) for code examples. 
@@ -15,36 +15,102 @@ A "module", in the context of a swerve drive, refers to the various motors, gear
 ### Why is the Falcon 500 So Good?
 The Falcon 500 is one of the most powerful motors used in FRC; however, that is only one of its many alluring qualities. The Falcon 500 has built-in encoders and a built-in Talon FX motor controller. This Talon FX is one of the best motor controllers available, and comes with PID controllers (calculations performed on the motor controller instead of the RoboRIO). The Talon FX also contains some motion profiled controllers. 
 
+# Utility
+Throughout this series, there will be various mathematical operations re-used. Due to this, you should create some sort of a (static) "math utility" class. For examples of this, I suggest looking at 2875's updated [``MathClass``](https://github.com/CshCyberhawks/KotlinMiniSteve/blob/main/src/main/kotlin/frc/robot/util/MathClass.kt) in Kotlin, as our [Java](https://github.com/CshCyberhawks/MiniSteve/blob/main/src/main/java/frc/robot/util/MathClass.java) version is significantly outdated. For now, the only method you will need in it is ``wrapAroundAngles``. This method will convert a negative angle into its positive equivalent (-90 becomes 270, etc). 
+```java
+double wrapAroundAngles(double angle) {
+
+	return (angle < 0) ? 360 + angle : angle
+
+}
+```
+
 # Code Setup
 Each module will be a Java class. This class will control the two motors for each wheel. Depending on which motors you use, this code may vary slightly. We will begin by creating the variables for the motor controllers. 
-```
+```java
 public class SwerveModule {
 	TalonSRX turnMotor;
 	TalonFX driveMotor;
+	TurnEncoder turnEncoder;
 }
 ```
-For information on the specific libraries, please check the CTRE Phoenix and WPILib documentation. We will also include PID controller's for each motor. 
+For information on the specific libraries, please check the CTRE Phoenix and WPILib documentation. 
+
+The ``TurnEncoder`` refers to a custom utility wrapper class around the WPILib ``AnalogInput`` class that I strongly recommend creating. Full example code for this wrapper class can be found [here](https://github.com/CshCyberhawks/MiniSteve/blob/main/src/main/java/frc/robot/util/TurnEncoder.java). The ``get`` method simply converts the encoders analog voltage signal into a degree reading. The math necessary to do this can be found on your encoder manufacturer's website. 
+
+```java
+... - Constants.turnEncoderOffsets[encoderPort]
 ```
+ This code subtracts a constant offset for each module from the encoder's reported angle. This serves the function of keeping the "0" angle at a set direction. To set this orientation for each module, you can simply remove this line of code (disable the offset), MANUALLY twist each module/wheel to face the desired direction, and set these raw(ish) encoder output values for each module into this dictionary. 
+
+We will also include PID controller's for each motor. In your constructor, you should call the PID's ``enableContinuousInput`` method for the turnPID. This allows the controller to manage "continuous" values such as angles where the value resets around a number (360 vs 0, 180 vs -180)
+```java
 ...
-PIDController turnPID;
+private PIDController turnPID;
 ```
-If you use a Falcon500 for any motor, you do not need an additional PID controller as their TalonFX motor controllers have built in PIDs. You will need to tune these PIDs properly for the swerve drive to function. I reccommend following the manual tuning outlined on [Wikipedia](https://en.wikipedia.org/wiki/PID_controller#Manual_tuning) and/or the [Ziegler-Nichols method](https://en.wikipedia.org/wiki/PID_controller#Ziegler%E2%80%93Nichols_method). Next, I recommend creating various unit conversion methods to take in the raw encoder values for your wheels and converting it to a velocity in meters per second. 
+```java
+...
+//in constructor
+	turnPID.enableContinuousInput(0, 360);
 ```
+If you use a Falcon500 for any motor, you do not need an additional PID controller as their TalonFX motor controllers have built in PIDs. You will need to tune these PIDs properly for the swerve drive to function. I recommend following the manual tuning outlined on [Wikipedia](https://en.wikipedia.org/wiki/PID_controller#Manual_tuning) and/or the [Ziegler-Nichols method](https://en.wikipedia.org/wiki/PID_controller#Ziegler%E2%80%93Nichols_method). Next, I recommend creating various unit conversion methods to take in the raw encoder values for your wheels and converting it to a velocity in meters per second. It simply employs dimensional analysis.
+```java
     public double convertRPMToMeters(double rpm) {
+	    //radius of the wheel
         double radius = 0.0505
         return 2 * Math.PI * radius * (rps / 7)
+        //(rps / 7) is due to our 7:1 gear ratio
     }
 ```
-This method will vary depending on gear ratio, motors/encoders used, and you module design. This is just an example of what one method might look like. After you have your fields and utility methods set up, we need to create the drive method.
-```
+This method will vary depending on gear ratio, motors/encoders used, and your module design. This is just an example of what one method might look like. You should confer with your build group as to what some of these constants should be. 
+
+# The Drive Method
+After you have your fields and utility methods set up, we need to create the drive method.
+```java
 public void drive(double desiredSpeed, double desiredAngle) {
 ...
 }
 ```
-This method will simply combine the feed forwards (raw inputs) and PID outputs for the driving and turning motors. The method can also optionally (I strongly reccommend this) optimize the wheel turning. This means that instead of fully rotating 180 degrees, the wheel will simply drive in the opposite direction (negate this speed). This makes the swerve drive significantly more efficient as well as makes it drive faster and smoother. This can be accomplished by a single if statement within the drive method. 
-```
-if (abs(angle - turnValue) > 90 && abs(angle - turnValue) < 270) {
-	angle = ((angle.toInt() + 180) % 360).toDouble()
-	speed = -speed
+This method will simply combine the feed forwards (raw inputs) and PID outputs for the driving and turning motors. The method can also optionally (I strongly recommend this) optimize the wheel turning. This means that instead of fully rotating 180 degrees, the wheel will simply drive in the opposite direction (negate this speed). This makes the swerve drive significantly more efficient as well as makes it drive faster and smoother. This can be accomplished by a single if statement within the drive method. 
+```java
+if (Math.abs(angle - turnValue) > 90 && Math.abs(angle - turnValue) < 270) {
+	desiredAngle = ((int) angle + 180) % 360;
+	desiredSpeed = -desiredSpeed
 }
 ```
+I recommend taking the time to fully examine this block of code, as it is an important component of the swerve module. 
+
+The rest of the method simply employs the PID controllers and sets the motor values.
+```java
+double turnPIDOutput = turnPidController.calculate(turnEncoder.get(), desiredAngle);
+
+driveMotor.set(ControlMode.PercentOutput, desiredSpeed);
+
+if (!turnPidController.atSetpoint()) {
+	turnMotor.set(ControlMode.PercentOutput, turnPIDOutput);
+
+}
+```
+The ``if`` statement is used to enable a "tolerance" on the turning PID controller. This means that it will ignore small differences in measured and actual values. 2875 uses this due to encoder inconsistencies and noise, and so we allow a tolerance of 4 degrees on each turning PID. This value is higher than what I would suggest others use; however, 2875 found it worked acceptably. 
+
+I suggest you also create a method to "preserve" the module's angle when given no input. This method will be used later on in the drive train to ensure each module does not attempt to reset its angle to 0 degrees when given no input. This method should call our ``drive`` method with inputs of 0, and the previous angle fed into the drive method. This means that we will need to add an extra private variable to our class whose purpose is to store the previously set angle. 
+```java
+...
+private double previousAngle = 0;
+...
+public void drive(...) {
+	...
+	previousAngle = desiredAngle;
+}
+
+public void preserveAngles() {
+	drive(0, previousAngle);
+}
+```
+
+# Summary
+There are many intricacies in swerve drive. I, along with the rest of team 2875, spent much of our 2021/2022 season attempting to learn these, while teaching ourselves the WPILib libraries and general FRC programming (post-COVID our team was left with no previous programmers), and I hope that with this series, other teams will have an easier time. However, I also believe that I, along with 2875, gained valuable knowledge through our lengthy experimentation. Due to this, I do not wish to give you (reader), everything you need to be able to create a FRC swerve drive, as others have already done this and you will lose out on valuable experiences. 
+## Future
+If you wish to expand upon this swerve module, there are several things you can add.
+ 1. An acceleration cap. You can add a cap to each swerve module's acceleration. This can lessen the physical wear and tear on hardware.
+ 2. You can automate the "calibration" (physically turning and manually settings the constants)
