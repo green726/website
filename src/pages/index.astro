@@ -12,7 +12,8 @@ const meta = {
 };
 
 const MAX_POSTS = 10;
-const allPosts = await getNonDrafts(Astro.glob<Post>("./posts/*.mdx"));
+const allPostsWithDrafts = await Astro.glob<Post>("./posts/*.mdx");
+const allPosts = getNonDrafts(allPostsWithDrafts);
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 ---
 

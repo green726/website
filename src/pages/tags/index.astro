@@ -4,7 +4,8 @@ import { getAllTagsWithCount } from "@/util";
 import { getNonDrafts } from "src/util"
 import type { Post } from "@/types";
 
-const allPosts = getNonDrafts(await Astro.glob<Post>("../posts/*.mdx"));
+const postsWithDrafts = await Astro.glob<Post>("../posts/*.mdx");
+const allPosts = getNonDrafts(postsWithDrafts);
 const allTags = getAllTagsWithCount(allPosts);
 
 const meta = {

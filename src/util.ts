@@ -8,9 +8,8 @@ export function sortMDByDate(posts: MDXInstance<Post>[] = []) {
 	);
 }
 
-export function getNonDrafts(posts: MDXInstance<Post>[]) {
+export function getNonDrafts(posts) {
 	return posts.filter((post) => !post.frontmatter.draft)
-
 }
 
 // This function expects the @arg posts to be sorted by sortMDByDate()
