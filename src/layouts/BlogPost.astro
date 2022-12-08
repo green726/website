@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "./Base.astro";
-import { getLocaleTime, getPreviousAndNextPosts, sortMDByDate } from "src/util";
+import { getLocaleTime, getPreviousAndNextPosts, sortMDByDate, getNonDrafts } from "src/util";
 import Paginator from "@/components/Paginator";
 import type { Post } from "@/types";
 
@@ -12,7 +12,7 @@ const date = new Date(publishDate);
 const datetime = date.toISOString();
 const postDate = getLocaleTime(date);
 const currentPage = new URL(Astro.request.url).pathname;
-const allPosts = await Astro.glob<Post>("../pages/posts/*.mdx");
+const allPosts = getNonDrafts(await Astro.glob<Post>("../pages/posts/*.mdx"));
 const allSortedPosts = sortMDByDate(allPosts);
 const { prev, next } = getPreviousAndNextPosts(currentPage, allSortedPosts);
 const paginationProps = {

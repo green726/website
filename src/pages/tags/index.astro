@@ -1,9 +1,9 @@
 ---
 import PageLayout from "@/layouts/Base";
-import { getAllTagsWithCount } from "@/util";
+import { getAllTagsWithCount, getNonDrafts } from "@/util";
 import type { Post } from "@/types";
 
-const allPosts = await Astro.glob<Post>("../posts/*.mdx");
+const allPosts = getNonDrafts(await Astro.glob<Post>("../posts/*.mdx"));
 const allTags = getAllTagsWithCount(allPosts);
 
 const meta = {

@@ -4,6 +4,7 @@ import BlogPostPreview from "@/components/BlogPostPreview";
 import SocialList from "@/components/SocialList";
 import { sortMDByDate } from "@/util";
 import type { Post } from "@/types";
+import getNonDrafts from "src/util"
 
 const meta = {
 	title: "Milan Lustig",
@@ -11,7 +12,7 @@ const meta = {
 };
 
 const MAX_POSTS = 10;
-const allPosts = await Astro.glob<Post>("./posts/*.mdx");
+const allPosts = await getNonDrafts(Astro.glob<Post>("./posts/*.mdx"));
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 ---
 
