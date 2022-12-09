@@ -6,11 +6,15 @@ description: The Drive Train
 tags: ["swerve-drive", "tutorial"]
 draft: true
 ---
+# Note
+To find the MOST updated versions of any 2875 code linked here, you may need to head into the "develop" branch of the respective repository. However, maintain caution as this code may not be completely functional, and, thus, I would GENERALLY suggest that you stick to the "main" branch. 
+
+
 # Overview
 In this post, I will go over the most complex MANDATORY component of swerve drive. Although I will be referring to this part as the "drive train", it is beneficial to think of it as a "conductor" for the entire robot; the "conductor" will take in input directly from the user (2875 uses a dual joystick HOSAS control scheme), convert the inputs to a "field-relative" version, split the inputs up into individual commands for each module. This installment in the tutorial will go over the bare minimum for a field oriented swerve drive "conductor". In future installments, I will continue to develop the swerve drive train by adding more features such as angular drift correction and positional drift correction. 
 
 ## Requirements
-So far throughout this tutorial series, the math has been relatively light and simple. However, now, you will need (at least) a basic understanding of vectors. The introduction to vector mathematics given in most AP/Honors level high school physics courses should generally be sufficient; however, if you feel a little unsure, now is a great time to brush up on your knowledge ((MathIsFun)[https://www.mathsisfun.com/algebra/vectors.html], (Wikipedia)[https://en.wikipedia.org/wiki/Vector_(mathematics_and_physics)]). The most important concepts are vector addition, and an understanding of the differences between polar vectors and Cartesian vectors.
+So far throughout this tutorial series, the math has been relatively light and simple. However, now, you will need (at least) a basic understanding of vectors. The introduction to vector mathematics given in most AP/Honors level high school physics courses should generally be sufficient; however, if you feel a little unsure, now is a great time to brush up on your knowledge ([MathIsFun](https://www.mathsisfun.com/algebra/vectors.html), [Wikipedia](https://en.wikipedia.org/wiki/Vector_(mathematics_and_physics))). The most important concepts are vector addition, and an understanding of the differences between polar vectors and Cartesian vectors.
 
 ## A Brief Note on WPILib
 At this point in the tutorial, you may again be wondering "Why not simply use the WPILib swerve utilities?". The answer to this question, is that you certainly can; however, if you do you will lose many of the benefits of creating your own custom swerve drive. Even if you use the WPILib utilities, I still recommend going through this tutorial so that you can gain a true understanding of their workings under the hood. What I have been referring to as the "drive train" or "conductor" is roughly equivalent to the `SwerveDriveKinematics` class found in WPILib. After this, you should have enough of an understanding of swerve drive to build an autonomous, and the various other QOL additions on your own, but I will still continue with the tutorial series in order to make it easier. Regardless of if you follow this tutorial series to the "t" or branch off significantly, the better understanding you will gain into swerve drive will more than pay for itself in terms of features you will be able to add over the WPILib utilities. For a brief example, 2875's swerve autonomous contains a few features that the WPILib autonomous swerve utilities do not: an autonomous that is both PID corrected and motion profiled, as well as PID based teleop drift correction through the use of odometry and a gyroscope. While it is possible to add these features using the WPILib, it will be more difficult and may involve the modification of their libraries.
@@ -18,6 +22,7 @@ At this point in the tutorial, you may again be wondering "Why not simply use th
 # Utility
 The train is the most math-involved piece of swerve drive, and thus it will have the most utility methods. 
 
+## Math
 To begin, we will create some methods to handle conversions between the two coordinate systems we will be using: polar and Cartesian.
 ```java
 public double[] polarToCartesian(double theta, double r) {
@@ -38,6 +43,21 @@ public double[] cartesianToPolar(double x, double y) {
     return new double[] { theta, r };
 }
 ```
-I recommend taking some time to go over these methods and make sure you fully understand the underlying concepts and math, as they will be used repeatedly throughout swerve. The `Mathatan2()` is of particular importance; you may think it is a simple tangent function, however, in reality, it does much (more)[https://en.wikipedia.org/wiki/Atan2]. The function solves the issue that arises with the existence of multiple quadrants in the coordinate plane, and the issue that comes with converting an (x, y) coordinate to an angle relative to the positive x-axis. If you take a few minutes to think about this problem, you will realize that there are several situations wherein you must convert the coordinate differently, and this is dependent on its quadrant. The `Math.atan2()` function saves you some time, and code. 
+I recommend taking some time to go over these methods and make sure you fully understand the underlying concepts and math, as they will be used repeatedly throughout swerve. The `Mathatan2()` is of particular importance; you may think it is a simple tangent function, however, in reality, it does much [more](https://en.wikipedia.org/wiki/Atan2). The function solves the issue that arises with the existence of multiple quadrants in the coordinate plane, and the issue that comes with converting an (x, y) coordinate to an angle relative to the positive x-axis. If you take a few minutes to think about this problem, you will realize that there are several situations wherein you must convert the coordinate differently, and this is dependent on its quadrant. The `Math.atan2()` function saves you some time, and code.
 
+Optionally, you can make a class to encapsulate these "angle" types, as well as vectors. This can make your code appear cleaner, and I do recommend it. You can also optionally use [SWOLib](https://github.com/CshCyberhawks/SwoLib) and the utility classes found there.
 
+In this tutorial, sticking with our theme of allowing the reader to dictate the majority of the code, we will only show an example implementation of a simple method to add vectors.
+
+```java
+public double[] addVectors(double[] v1, double[] v2) {
+    return new double[] {v1[0] + v2[0], v1[1] + v2[1]};
+}
+```
+## Gyroscope
+Team 2875 found it of great help to create a wrapper class to encapsulate our NavX gyro, as it made our drive train code a bit cleaner. While technically optional, I strongly suggest you do this as well. Since the wrapper class will not contain any complex logic and will simply provide a unified way to use the NavX gyro, I will not go over every detail in the tutorial. As usual, you can find a (slightly) outdated Java version of 2875's gyro wrapper class [here](https://github.com/CshCyberhawks/MiniSteve/blob/main/src/main/java/frc/robot/util/Gyro.java) or an updated Kotlin version [here](https://github.com/CshCyberhawks/KotlinMiniSteve/blob/main/src/main/kotlin/frc/robot/util/Gyro.kt)
+
+The only aspect of the gyroscope that I will go over in this tutorial pertains to the robot's field orientation: its offset. In the 2875 `Gyro` class, you may find the `setOffset` method to be confusing. This method will "reset" a constant offset on the gyro that allows us to dictate the direction considered "0" degrees. This allows us, and the driver, to redefine the field-orientation of the swerve drive on the fly, and to counter gyro drift. 2875 binds this method to a button on our control sticks, and recommends that our drivers press it and "reset" the gyro (in reality only updating the `offset` variable and changing the direction considered 0) whenever they notice drift, or, ideally, after several 360 degree turns of the robot (especially if the turns are performed at high speed). Team 2875 found the drift on the gyroscope to be easily manageable at only a few degrees per full turn. 
+
+# Code Setup
+You should create a class to encapsulate the "conductor", or drive train as a whole, as it is a very complex piece of swerve drive and only grows in complexity as parts are added.
