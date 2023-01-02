@@ -4,7 +4,7 @@ title: FRC Swerve Drive Tutorial - Part 3
 publishDate: 8 December 2022
 description: The Drive Train
 tags: ["swerve-drive", "tutorial"]
-draft: true
+draft: false
 ---
 # Note
 To find the MOST updated versions of any 2875 code linked here, you may need to head into the "develop" branch of the respective repository. However, maintain caution as this code may not be completely functional, and, thus, I would GENERALLY suggest that you stick to the "main" branch. 
@@ -55,9 +55,81 @@ public double[] addVectors(double[] v1, double[] v2) {
 }
 ```
 ## Gyroscope
-Team 2875 found it of great help to create a wrapper class to encapsulate our NavX gyro, as it made our drive train code a bit cleaner. While technically optional, I strongly suggest you do this as well. Since the wrapper class will not contain any complex logic and will simply provide a unified way to use the NavX gyro, I will not go over every detail in the tutorial. As usual, you can find a (slightly) outdated Java version of 2875's gyro wrapper class [here](https://github.com/CshCyberhawks/MiniSteve/blob/main/src/main/java/frc/robot/util/Gyro.java) or an updated Kotlin version [here](https://github.com/CshCyberhawks/KotlinMiniSteve/blob/main/src/main/kotlin/frc/robot/util/Gyro.kt)
+Team 2875 found it of great help to create a (static) wrapper class to encapsulate our NavX gyro, as it made our drive train code a bit cleaner. While technically optional, I strongly suggest you do this as well. Since the wrapper class will not contain any complex logic and will simply provide a unified way to use the NavX gyro, I will not go over every detail in the tutorial. As usual, you can find a (slightly) outdated Java version of 2875's gyro wrapper class [here](https://github.com/CshCyberhawks/MiniSteve/blob/main/src/main/java/frc/robot/util/Gyro.java) or an updated Kotlin version [here](https://github.com/CshCyberhawks/KotlinMiniSteve/blob/main/src/main/kotlin/frc/robot/util/Gyro.kt)
 
-The only aspect of the gyroscope that I will go over in this tutorial pertains to the robot's field orientation: its offset. In the 2875 `Gyro` class, you may find the `setOffset` method to be confusing. This method will "reset" a constant offset on the gyro that allows us to dictate the direction considered "0" degrees. This allows us, and the driver, to redefine the field-orientation of the swerve drive on the fly, and to counter gyro drift. 2875 binds this method to a button on our control sticks, and recommends that our drivers press it and "reset" the gyro (in reality only updating the `offset` variable and changing the direction considered 0) whenever they notice drift, or, ideally, after several 360 degree turns of the robot (especially if the turns are performed at high speed). Team 2875 found the drift on the gyroscope to be easily manageable at only a few degrees per full turn. 
+The only aspect of the gyroscope that I will go over in this tutorial pertains to the robot's field orientation: its offset. In the 2875 `Gyro` class, you may find the `setOffset` method to be confusing. This method will "reset" a constant offset on the gyro that allows us to dictate the direction considered "0" degrees. This allows us, and the driver, to redefine the field-orientation of the swerve drive on the fly, and to counter gyro drift. If you need a reminder as to the significance of "field orientation", it refers to a form of holonomic (swerve is a subset of holonomic drive) train in which "forward" (in terms of input) always remains the same direction. This means that no matter how much the robot spins pushing forward on the joystick will always result in movement in the same direction. You will be able to see how this is achieved later on in this post; for now, just now that the "offset" allows the "forward" direction to be set/changed.
+
+2875 binds this method to a button on our control sticks, and recommends that our drivers press it and "reset" the gyro (in reality only updating the `offset` variable and changing the direction considered 0) whenever they notice drift, or, ideally, after several 360 degree turns of the robot (especially if the turns are performed at high speed). Team 2875 found the drift on the gyroscope to be easily manageable at only a few degrees per full turn.
 
 # Code Setup
 You should create a class to encapsulate the "conductor", or drive train as a whole, as it is a very complex piece of swerve drive and only grows in complexity as parts are added. At a minimum, this class must contain as many instances of the `SwerveModule` class as exists on your robot. For a four wheeled swerve drive train, you must have 4 instances of this class. For the purpose of this tutorial, although alternate swerve drive configurations exist, we will assume a standard four wheel swerve configuration.
+
+As previously mentioned, I suggest the creation of a static "Constants" file for use throughout your codebase. This file will be used to store any sort of guaranteed physical "constant" such as motor ports, conversion values, or set positions. 
+
+First, we will define our modules/wheels (you can either put them in an array or define them individually, it comes down to personal preference).
+
+```java
+    //pass in the turn/drive motor and encoder ports
+    SwerveModule backLeftModule = new SwerveModule(Constants.backLeftTurnMotorPort, Constants.backLeftDriveMotorPort, Constants.backLeftEncoderPort);
+    SwerveModule backRightModule = ...
+    SwerveModule frontLeftModule = ...
+    SwerveModule frontRightModule = ...
+```
+
+I personally combine the usage of individually declared modules and an array containing said modules for ease-of-use, which should be defined like so (if you choose):
+
+```java
+    public SwerveWheel[] wheelArr = new SwerveWheel[4] {backLeftModule, backRightModule, frontLeftModule, frontRightModule};
+```
+
+You should also (in your constants file) define some set angles for your modules to twist (this will be used in the swerve calculations and allows fine-tuning of each individual module to account for any sort of physical/mechanical issues). As a basis, you should use the following angles (I suggest only performing minimal changes).
+
+```java
+    public static final HashMap<String, Integer> twistAngleMap = new HashMap<>() {
+        {
+            put("frontRight", 45);
+            put("frontLeft", 135);
+            put("backRight", -45);
+            put("backLeft", -135);
+            }
+    };
+```
+
+You should notice that these angles are all somewhat "opposite" to each other and position the robot's wheels to form a rectangular shape offset from the main chassis.
+
+You may also want to define another hash map for twist speed multipliers for each module (I found that with 2875's tuning and robot scaling the twisting speed down by about 50% made the robot significantly more controllable).
+
+```java
+    public static final HashMap<String, Double> twistSpeedMap = new HashMap<>() {
+            {
+                    put("frontRight", .6);
+                    put("frontLeft", .6);
+                    put("backRight", .6);
+                    put("backLeft", .6);
+            }
+    };
+```
+
+# Theory/Math
+> This is where the fun begins!
+
+As mentioned in the introductory post in this series, swerve drive functions on a basis of somewhat simple vector math, something that should be doable for anyone who has taken a physics course (or related math course), especially the AP level physics courses. To put it as simply as possible, we must take in two inputs (from the joystick(s)) and split it 4 ways. There are several ways to accomplish this, and the math can be condensed into a few short lines; however, 2875 find it more clear to split the math into several small functions, and while this may not be necessary for people with a concrete understanding of vector math, it is incredibly helpful for those who don't. 
+
+To get into the nitty-gritty of the math, we will split this process up into 4 steps. First, for each individual module, we must take the input (from the joystick) and convert the pure (x, y) input vector from Cartesian form to polar form. This is technically only necessary for field orientation; however, since swerve doesn't fully function without field orientation, I consider it a requirement. We do this in order to be able to add the robot's current "angle/direction" reported by the gyro to the input. Once we have the pure (x, y) joystick input in polar form we can, quite literally, add this gyroscope angle to the "theta" value of this polar coordinate. For now, we will leave this value alone. 
+
+Next, you must convert the "twisting" input from polar to Cartesian. You may be wondering, "how is the twist input a full polar vector? Doesn't it only have magnitude from the joystick?" and yes, you are correct, the joystick can only provide the magnitude for twisting. This is where our constant twist angle hash map from earlier will come into play. We must take the values from the map for each module and treat that as our theta/angle in the twist polar vector. At this point, you can also (optionally) multiply the joystick input (magnitude) by the constant twist speed multiplier from our other hash map. We will then take this polar vector and (you guessed it) convert it to Cartesian form.
+
+Now, we have two separate Cartesian vectors, and what does that mean? Why it's time to add them, of course! So, we can simply add the "exes" and "whys" of each vector together. Now, we have our combined Cartesian vector for each individual wheel that accounts for both twist and strafe/translation, yay! Now, I swear, for the last time, we must finally convert this Cartesian vector back to a polar vector. This will allow us to directly feed a desired speed and angle to each module's `drive` function. 
+
+At this point, you may also (optionally) "normalize" each individual module's desired speeds around a minimum and maximum speed. This can be done to prevent certain scaling issues arising from the addition/manipulation of the input vectors. 2875 did not find this to be necessary; however, it doesn't hurt to add. You can use any sort of normalization function and simply pass in all the module speeds, a minimum speed, and a maximum speed. 
+
+# The Actual Code (drive function)
+Again, as previously mentioned in this series, complete code for a swerve robot can be found on 2875's GitHub organization, both in Kotlin (updated) and Java (outdated). However, both of these swerve drive trains are more advanced than the one described in this blog post (they build upon it with various other additions that will be described at later points in this series)
+
+# Summary
+
+# Future
+At this point, you have (mostly) the basis necessary to program the rest of swerve drive, including autonomous/odometry. However, I will still go over those at later points in the tutorial. Here, even if you choose to continue to follow this tutorial series, there are a plethora of possible expansion. Here is a (non-definitive) list:
+    1. **Throttle** - In reality this is more of a "speed multiplier", but it functions similarly to a throttle. This expansion is very simple and possibly the most useful (for your drivers). The addition of a simple throttle controlled by your joystick (2875 bound several control methods on our T.16000M joysticks: actual throttles on the bottom, buttons on the top (presets), and the mini-joycons at the top (small increments)) can make a night and day difference while driving (I also drive swerve in competition). 2875 uses a simple multiplier on the input x, y, and twist.
+    2. **Disable Field Orientation** - While I did say that field orientation is crucial to swerve drive, there is a single scenario in which it can be beneficial to disable it. When driving via camera (without being able to see the robot/the field) it is pretty much impossible to use field orientation, so having a physical toggle that can disable it will be incredibly helpful in competition. 2875 also has limelight ball tracking (this will be covered in a later post) and we discovered that it is much easier to have the robot "auto pick-up" balls/objects by disabling field orientation and essentially driving straight forward while twisting via limelight. This is also very simple to implement and comes down to a boolean being passed through your code.
+
