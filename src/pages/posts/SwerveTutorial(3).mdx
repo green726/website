@@ -151,21 +151,42 @@ We will start off with the "base" function for the swerve drive math: this funct
 
 ```java
     public double[] calculateDrive(double x1, double y1, double theta2, double r2, double twistMult) {
-            // Gets the cartesian coordinate of the robot's joystick translation inputs
-            double[] driveCoordinate = fieldOriented(x1, y1, Gyro.getAngle());
+            // Gets the cartesian vector of the robot's joystick translation inputs
+            double[] driveVector = fieldOriented(x1, y1, Gyro.getAngle());
             // Turns the twist constant + joystick twist input into a cartesian coordinates
-            double[] twistCoordinate = polarToCartesian(theta2, r2 * twistMult);
+            double[] twistVector = polarToCartesian(theta2, r2 * twistMult);
 
             // Vector math adds the translation and twisting cartesian coordinates before turning them into polar and returning their (polar) result
-            return cartesianToPolar( driveCoordinate[0] + twistCoordinate[0], driveCoordinate[1] + twistCoordinate[1]);
+            return cartesianToPolar( driveVector[0] + twistVector[0], driveVector[1] + twistVector[1]);
     }
 ```
 
+Next, we will write the `fieldOriented` function. This function is quite simply and merely converts converts its (x, y) joystick inputs to a polar coordinate so the gyro-reported angle can be taken into account (to ensure the same direction is always forwards)
+
+```java
+    public double[] fieldOriented(double x, double y, double gyroAngle) {
+        // turns the translation input into a polar vector
+        double[] polar = cartesianToPolar(x, y);
+        // adds the gyro angle to the angle of the translation of the robot (in polar form)
+        // this makes it field oriented
+        double theta = polar[0] + gyroAngle;
+
+        double r = polar[1];
+
+        // returns the new field oriented translation but converted to a cartesian vector (so it can eventually be added to the twist cartesian vector at the end of the `calculateDrive` function)
+        return polarToCartesian(theta, r);
+    }
+```
+
+Now, you should go back to the drive function, call the `calculateDrive` with each module's respective values, and pass the output to each module in order to control the angle and speed of the wheels. As a light exercise (to gain some familitary with the drive train), you can finish off the `drive` function. Again, all that is remaining is to actually call the `calculateDrive` function for each module (with their constants) and pass it into the module's individual drive functions. Also, optionally, at this point you can add in the normalization (outlined in the #Future section).
+
 # Summary
+This was a BIG blog post, and, in the future, I will try to split anything this size (or larger) into multiple sub-pieces so they can be released sooner. At this point, you should have all the skills necessary to program a working (albeit rudimentary) swerve drive robot. **Congratulations!** now, you can take some time to play around with your robot, and put it through some stress-tests to make sure there are no issues. However, unfortunately (or luckily, depending on how you look at it), you are far from done with programming swerve drive. You still need to add in some autonomous code, and while it is possible (and simple) to hard-code in some movements, I recommend you take the time to build a dynamic, motion-profiled, PID-corrected, position-tracking autonomous mode. This will allow your robot to stand out, increase its performance during autonomous, and (drastically) increase your QOL once it is complete (it will be vastly simpler to create new configurations for autonomous). In future tutorials, I will go over how to accomplish this, so stay tuned. 
 
 # Future
 At this point, you have (mostly) the basis necessary to program the rest of swerve drive, including autonomous/odometry. However, I will still go over those at later points in the tutorial. Here, even if you choose to continue to follow this tutorial series, there are a plethora of possible expansion. Here is a (non-definitive) list:
     1. **Throttle** - In reality this is more of a "speed multiplier", but it functions similarly to a throttle. This expansion is very simple and possibly the most useful (for your drivers). The addition of a simple throttle controlled by your joystick (2875 bound several control methods on our T.16000M joysticks: actual throttles on the bottom, buttons on the top (presets), and the mini-joycons at the top (small increments)) can make a night and day difference while driving (I also drive swerve in competition). 2875 uses a simple multiplier on the input x, y, and twist.
     2. **Disable Field Orientation** - While I did say that field orientation is crucial to swerve drive, there is a single scenario in which it can be beneficial to disable it. When driving via camera (without being able to see the robot/the field) it is pretty much impossible to use field orientation, so having a physical toggle that can disable it will be incredibly helpful in competition. 2875 also has limelight ball tracking (this will be covered in a later post) and we discovered that it is much easier to have the robot "auto pick-up" balls/objects by disabling field orientation and essentially driving straight forward while twisting via limelight. This is also very simple to implement and comes down to a boolean being passed through your code.
-    3. **X,Y Drift Correction** - Unfortunately, due to the mechanical complexity of swerve drive, it is entirely possible that you will end up with some sort of "drift" or slight error in the translatio (and possibly twist) (team 2875 had it on our 2022 robot). We added in software-based drift correction through the use of two PID's in teleop, one for X position and one for Y position. You can simply run the pure joystick inputs through the PIDs before feeding through the rest of swerve drive. (**NOTE:** you can only accomplish this if with a VERY accurate accelerometer or using a wheel-speed based odomety (which I will go over in the next tutorial), if you wish to try your hand at some drift correction, you can attempt to fix any angular drift you might have (this doesn't need odometry/accelerometer; only a gyroscope))
-    4. **Extensive SmartDashboard/Shuffleboard Integration** - This goes for the entire tutorial but can be especially useful in the drive train. You can organize different tabs on shuffleboard, some with debug information, others customized to your drivers needs. You can put wheel speeds, robot speeds, throttle, and any other value you with onto these tabs. 
+    3. **Wheel Speed Normalization** - If you wish, you can "normalize" the speed inputs (the magnitude of the polar vectors) for each of your modules (after the inputs are calculated in the `calculateDrive` function). This will allow you to ensure that in the off-chance the vector math causes the values to increase (or decrease) disproportionally to the joystick inputs, you can "normalize" them around your desired minimum and maximum values. You can use a general "normalization" formula and examples can be found on the 2875 Cyberhawks GitHub in both Kotlin and Java, altough I recommend looking at our Kotlin code as the Java normalization code contained several bugs. 
+    4. **X,Y Drift Correction** - Unfortunately, due to the mechanical complexity of swerve drive, it is entirely possible that you will end up with some sort of "drift" or slight error in the translatio (and possibly twist) (team 2875 had it on our 2022 robot). We added in software-based drift correction through the use of two PID's in teleop, one for X position and one for Y position. You can simply run the pure joystick inputs through the PIDs before feeding through the rest of swerve drive. (**NOTE:** you can only accomplish this if with a VERY accurate accelerometer or using a wheel-speed based odomety (which I will go over in the next tutorial), if you wish to try your hand at some drift correction, you can attempt to fix any angular drift you might have (this doesn't need odometry/accelerometer; only a gyroscope))
+    5. **Extensive SmartDashboard/Shuffleboard Integration** - This goes for the entire tutorial but can be especially useful in the drive train. You can organize different tabs on shuffleboard, some with debug information, others customized to your drivers needs. You can put wheel speeds, robot speeds, throttle, and any other value you with onto these tabs. 
