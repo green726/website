@@ -124,7 +124,42 @@ Now, we have two separate Cartesian vectors, and what does that mean? Why it's t
 At this point, you may also (optionally) "normalize" each individual module's desired speeds around a minimum and maximum speed. This can be done to prevent certain scaling issues arising from the addition/manipulation of the input vectors. 2875 did not find this to be necessary; however, it doesn't hurt to add. You can use any sort of normalization function and simply pass in all the module speeds, a minimum speed, and a maximum speed. 
 
 # The Actual Code (drive function)
-Again, as previously mentioned in this series, complete code for a swerve robot can be found on 2875's GitHub organization, both in Kotlin (updated) and Java (outdated). However, both of these swerve drive trains are more advanced than the one described in this blog post (they build upon it with various other additions that will be described at later points in this series)
+Again, as previously mentioned in this series, complete code for a swerve robot can be found on 2875's GitHub organization, both in Kotlin (updated) and Java (outdated). However, both of these swerve drive trains are more advanced than the one described in this blog post (they build upon it with various other additions that will be described at later points in this series). Here, I will try to go over a few important (and potentially confusing) components.
+
+First, the prototype for your drive funtion.
+```java
+    public void drive(double inputX, double inputY, double inputTwist)
+```
+
+The function should simply take in 3 axis of joystick inputs for X translation, Y translation, and twisting.
+
+We will then check if the inputs are all 0 (withing the function), and if so, prevent any movement in the modules. This is done to prevent the module reverting to a desired angle of 0 but allowing it to return to a desired speed of 0 upon stopping. This also lessens wear and tear on the hardware. 
+```java
+    if (inputX == 0 && inputY == 0 && inputTwist == 0) {
+        backRight.preserveAngle();
+        backLeft.preserveAngle();
+        frontRight.preserveAngle();
+        frontLeft.preserveAngle();
+        return;
+    }
+```
+"Why can't you just return out of the drive function?" You could, but then you would be unable to ensure each module remains at its (respective) previous angle without any speed.
+
+Now, we are going to take a break form the drive function in order to create a few other functions to perform the swerve map (you can compress it all down into the drive function, but the code will be cleaner if it is split up a bit).
+
+We will start off with the "base" function for the swerve drive math: this function will be the one called form the drive function.
+
+```java
+    public double[] calculateDrive(double x1, double y1, double theta2, double r2, double twistMult) {
+            // Gets the cartesian coordinate of the robot's joystick translation inputs
+            double[] driveCoordinate = fieldOriented(x1, y1, Gyro.getAngle());
+            // Turns the twist constant + joystick twist input into a cartesian coordinates
+            double[] twistCoordinate = polarToCartesian(theta2, r2 * twistMult);
+
+            // Vector math adds the translation and twisting cartesian coordinates before turning them into polar and returning their (polar) result
+            return cartesianToPolar( driveCoordinate[0] + twistCoordinate[0], driveCoordinate[1] + twistCoordinate[1]);
+    }
+```
 
 # Summary
 
