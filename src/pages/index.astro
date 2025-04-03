@@ -21,23 +21,26 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 	<section>
 		<h1 class="mb-6 title">Hello World</h1>
 		<p class="mb-4">
-			Welcome to Milan (green726) Lustig's personal website!
-			Here you can find my blog, as well a portfolio.
+			Welcome to Milan (green726) Lustig's personal website! WIP.
+			<!-- Here you can find my blog, as well a portfolio. -->
 		</p>
 
-	</section>
-	<section aria-label="Blog post list" class="mt-16">
-		<h2 class="mb-4 text-xl title">Posts</h2>
-		<ul class="space-y-4 sm:space-y-2">
-			{
-				allPostsByDate.map((p) => (
-					<li class="flex flex-wrap items-center gap-x-2 [&_q]:w-full">
-						<BlogPostPreview post={p} as="h2" />
-					</li>
-				))
-			}
-		</ul>
-	</section>
+    </section>
+    <!---TODO: readd --->
+	<!-- <section aria-label="Blog post list" class="mt-16"> -->
+	<!-- 	<h2 class="mb-4 text-xl title">Posts</h2> -->
+	<!-- 	<ul class="space-y-4 sm:space-y-2"> -->
+	<!-- 		{ -->
+	<!-- 			allPostsByDate.map((p) => ( -->
+	<!-- 				<li class="flex flex-wrap items-center gap-x-2 [&_q]:w-full"> -->
+	<!-- 					<BlogPostPreview post={p} as="h2" /> -->
+	<!-- 				</li> -->
+	<!-- 			)) -->
+	<!-- 		} -->
+	<!-- 	</ul> -->
+ <!--    </section> -->
+
+
 	<!-- <section class="mt-16">
 		<h2 class="mb-4 text-xl title">Technologies</h2>
 		<ul class="space-y-4 sm:space-y-2">
