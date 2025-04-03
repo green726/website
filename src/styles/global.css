@@ -40,7 +40,8 @@
 
     /* visited link */
     a:visited {
-        color: #19535d;
+        /* color: #19535d; */
+        color: #2aaaba;
     }
 
     /* selected link */
