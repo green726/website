@@ -1,3 +1,4 @@
+
 @tailwind base;
 @layer base {
 	:root {
@@ -55,3 +56,25 @@
 }
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+	.text-link {
+		color: #2aaaba;
+	}
+
+    .text-pink {
+        color: #ba5789;	
+        font-weight: bold; /* Makes the text bolder */
+		font-size: 0.9rem; /* Increases the text size */
+    }
+
+    .separator {
+      color: #9ca3af; /* Gray color */
+      display: flex; /* Ensures proper alignment */
+      align-items: center; /* Centers the separator vertically */
+      margin: 0 0.2rem; /* Reduced spacing */
+      border-left: 1px solid #9ca3af; /* Creates a vertical line */
+      height: 1.5rem; /* Adjust the height of the line */
+    }
+}
+
