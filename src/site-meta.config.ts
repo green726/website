@@ -1,6 +1,6 @@
 const siteMeta = {
-  title: "Blog | Portfolio",
-  description: "Milan Lustig's Portfolio and Blog",
+  title: "Computer Science | Research",
+  description: "Milan Lustig",
   lang: "en-GB",
   ogLocale: "en_GB",
   githubUrl: "https://github.com/chrismwilliams/astro-theme-cactus",

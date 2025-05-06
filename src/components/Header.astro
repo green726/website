@@ -21,6 +21,7 @@ const url = new URL(Astro.request.url);
 	});
 </script>
 
+
 <header>
 	<span>
 		<a
@@ -32,11 +33,14 @@ const url = new URL(Astro.request.url);
 			<span>Milan Lustig</span>
 		</a>
 		<nav id="navigation-menu" aria-label="Main">
-			<a href="/" aria-current={url.pathname === "/" ? "page" : false}>Home</a>
+            <a class="" href="/" aria-current={url.pathname === "/" ? "page" : false}>Home
+            </a>
             <a href="/research" aria-current={url.pathname === "/research" ? "page" : false}
 				>Research
             </a>
-            <a href="/resume.pdf">
+                <a href="/resume.pdf"
+                class="inline-block line-clamp-1 group text-sky-600 transition duration-300"
+                    >
                 Resume
             </a>
             <!-- TODO: readd -->
@@ -67,7 +71,7 @@ const url = new URL(Astro.request.url);
 
 <style>
 	header {
-		@apply relative z-50 mb-28 flex items-center sm:pl-[5.65rem];
+		@apply relative z-50 mb-20 flex items-center sm:pl-[5.65rem];
 
 		.logo {
 			@apply inline-flex items-center grayscale hover:filter-none sm:relative sm:inline-block;
