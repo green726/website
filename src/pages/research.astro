@@ -1,46 +1,200 @@
 ---
 import PageLayout from "@/layouts/Base";
-import { Image } from "@astrojs/image/components";
-import aboutImg from "../assets/about-astro.png";
+// import { Image } from "@astrojs/image/components"; // Not used, can remove
+// import aboutImg from "../assets/about-astro.png"; // Not used, can remove
 
 const meta = {
-	title: "Research",
-	description: "Selected Research Work",
+    title: "Projects", // Changed title to be more general for a portfolio
+    description: "Selected Research & Other Work",
 };
 ---
 
 <PageLayout meta={meta}>
-	<div class="space-y-6">
-		<h1 class="title">Research</h1>
-		<p>
-			WIP
-		</p>
-		<!-- <div class="flex justify-center">
-			<Image src={aboutImg} alt="A cartoon cactus looking at 'Astro.build' logo"
-			/>
-		</div> -->
-		<!-- <p>Here are some of my projects and experiences</p> -->
-		<!-- <ul class="list-disc list-inside"> -->
-		<!-- 	<li><a href="https://github.com/green726/SWO">SWO</a> - my compiled programming language built in c# and LLVM with a custom-made parser</li> -->
-		<!-- 	<li>Programming team lead - First Robotics <a href="https://github.com/CSHCyberhawks">CSHCyberhawks</a><br> -->
-		<!-- 	&emsp; I built a custom swerve drive train complete with no-accelerometer odometry, PIDs, field orientation, and a self-correcting motion-profiled autonomous mode.</li> -->
-		<!-- 	<li>The Fig Office - My submission to the week long 2022.2 Brackey's game jam. <br> -->
-		<!-- 	&emsp; In this game, I created a full custom 3d character controller, AI behavior system, and dialogue system. I also did all of the game, level, and UI design. The artwork was all free assets. -->
- 	<!-- 		<br> <a href="The Fig Office">Github</a> <a href = "https://green726.itch.io/the-fig-office">Itch.io</a> -->
-		<!-- 	</li> -->
-		<!-- 	<li>Haywire - My submission to the week long 2021.2 Brackey's game jam. <br> -->
-		<!-- 	&emsp; For this game, I wrote a custom parkour 3d character controller complete with wall running and sliding, as well as a custom powerup system. For this game, I split the game and level design 50/50 with my artist and did all of the UI design. -->
-		<!--  	<br><a href="https://github.com/green726/brackey-s-game-jam-2021">Github</a> <a href = "https://green726.itch.io/haywire">Itch.io</a> -->
-		<!-- 	</li> -->
-		<!-- 	<li><a href = "https://github.com/green726/greenvim">Greenvim</a> - my neovim configuration and my main IDE. <br> -->
-		<!-- 	&emsp; Greenvim has a minimalistic look, but has as many features as most IDEs.  -->
-		<!-- 	</li> -->
-		<!-- 	<li><a href="https://github.com/AstrocoreGames">Astrocore Games</a><br> -->
-		<!-- 	&emsp; I built a full backend for the Astrocore Games website (sign in, account information, etc) with vanilla JS, socket.io, and express.js. As well as some HTML games. </li> -->
-        <!-- </ul> -->
-        <p>
-            
+    <div class="space-y-6">
+        <h1 class="title text-[hsl(var(--theme-text))]">Selected Research & Other Work</h1>
+        <p class="text-[hsl(var(--theme-text))]">
+            Below you may find some of my selected research projects and other works. Click on a project box to expand for more details.
         </p>
 
-	</div>
+        <h2 class="text-2xl font-bold mt-8 mb-4 text-[hsl(var(--theme-text))]">Research</h2>
+        <ul class="list-none space-y-4">
+            {/* MLISA - Standout Project */}
+            <li class="p-4 border border-[hsl(var(--theme-link))] rounded-lg shadow-md"
+                style="background-color: hsl(var(--theme-accent) / 0.15); box-shadow: 0 6px 12px hsl(var(--theme-shadow));">
+                <h3 class="text-xl font-bold cursor-pointer text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))]" data-project-toggle="mlisa">
+                    <a href="https://compas.cs.stonybrook.edu/" target="_blank" rel="noopener noreferrer" class="hover:underline">
+                        Stony Brook University COMPAS Lab: MLISA
+                    </a>
+                    <span class="text-sm text-[hsl(var(--theme-text))] ml-4"> - Compiler & Architecture Development, Machine Learning, Cpp/ARM/RISCV/LLVM/MLIR/PyTorch</span>
+                </h3>
+                <div id="mlisa-details" class="hidden mt-3 text-[hsl(var(--theme-text))]">
+                    <p>I served as the project lead on this research initiative, which incorporated multiple graduate students. My work focused on developing <em>novel compiler infrastructure and architecture</em> for machine learning acceleration hardware.</p>
+                    <ul class="list-disc list-inside mt-2">
+                        <li>This work began as a <em>Simons Fellow</em>, a highly competitive program with a &lt;4% acceptance rate.</li>
+                        <li>It subsequently continued as a <em>full-time Research Assistant</em> in Prof. Mike Ferdman's COMPAS Lab at Stony Brook University.</li>
+                    </ul>
+                </div>
+            </li>
+
+            {/* UMich - Regular */}
+            <li class="p-2 border border-[hsl(var(--theme-accent-2))] rounded-lg shadow-sm"
+                style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 0 2px 4px hsl(var(--theme-shadow));">
+                <h3 class="text-base font-semibold cursor-pointer text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))]" data-project-toggle="umich">
+                    <a href="https://tylr.fun/melds/" target="_blank" rel="noopener noreferrer" class="hover:underline">
+                        University of Michigan Future of Programming Lab
+                    </a>
+                    <span class="text-xs text-[hsl(var(--theme-text))] ml-2"> - CS Education Software, OCAML/ReasonML/Menhir</span>
+                </h3>
+                <div id="umich-details" class="hidden mt-2 text-[hsl(var(--theme-text))] text-sm">
+                    <p>I was the <em>first high school lab member</em> working in Professor Cyrus Omar's FP Lab at the University of Michigan.</p>
+                    <ul class="list-disc list-inside mt-2">
+                        <li>Collaborated with PhD students on thesis projects to develop computer science education software.</li>
+                        <li>The software developed is currently used in multiple university courses.</li>
+                        <li>Investigated tile-based editors and languages.</li>
+                    </ul>
+                </div>
+            </li>
+
+            {/* NYU - Regular */}
+            <li class="p-2 border border-[hsl(var(--theme-accent-2))] rounded-lg shadow-sm"
+                style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 0 2px 4px hsl(var(--theme-shadow));">
+                <h3 class="text-base font-semibold cursor-pointer text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))]" data-project-toggle="nyu">
+                    <a href="https://journals.aps.org/pre/abstract/10.1103/PhysRevE.110.034122" target="_blank" rel="noopener noreferrer" class="hover:underline">
+                        New York University Martiniani Lab
+                    </a>
+                    <span class="text-xs text-[hsl(var(--theme-text))] ml-2"> - Computational Physics Algorithm, Rust</span>
+                </h3>
+                <div id="nyu-details" class="hidden mt-2 text-[hsl(var(--theme-text))] text-sm">
+                    <p>I was the <em>only high schooler</em> in this graduate-level research lab, where I studied graduate-level theoretical physics with Professor Stefano Martiniani.</p>
+                    <ul class="list-disc list-inside mt-2">
+                        <li>Developed a <em>nested-sampling algorithm</em> in the <strong>Rust language</strong> for use in multiple physics research labs.</li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+
+        <h2 class="text-2xl font-bold mt-8 mb-4 text-[hsl(var(--theme-text))]">Independent Projects</h2>
+        <ul class="list-none space-y-4">
+            {/* SWO - Standout Project */}
+            <li class="p-4 border border-[hsl(var(--theme-link))] rounded-lg shadow-md"
+                style="background-color: hsl(var(--theme-accent) / 0.15); box-shadow: 0 6px 12px hsl(var(--theme-shadow));">
+                <h3 class="text-xl font-bold cursor-pointer text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))]" data-project-toggle="swo">
+                    <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4661607" target="_blank" rel="noopener noreferrer" class="hover:underline">
+                        SWO Wants Options (SWO)
+                    </a>
+                    <span class="text-sm text-[hsl(var(--theme-text))] ml-4"> - Compilers, Award-Winning Language Project, C#/LLVM</span>
+                </h3>
+                <div id="swo-details" class="hidden mt-3 text-[hsl(var(--theme-text))]">
+                    <p>I created a novel general-purpose compiled programming language designed for use in computer science education. This project entailed multiple years of <em>self-teaching</em> and research work in compiler development.</p>
+                    <ul class="list-disc list-inside mt-2">
+                        <li>Received the <strong>3rd Place Grand Award</strong> in the <em>International Science and Engineering Fair</em> (ISEF).</li>
+                        <li>Recognized as a <strong>Regeneron Science Talent Search</strong> (STS) <em>Top 300 Scholar</em> in America's oldest and most prestigious science competition.</li>
+                    </ul>
+                </div>
+            </li>
+
+            {/* Safe Water Operation - Regular */}
+            <li class="p-2 border border-[hsl(var(--theme-accent-2))] rounded-lg shadow-sm"
+                style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 0 2px 4px hsl(var(--theme-shadow));">
+                <h3 class="text-base font-semibold cursor-pointer text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))]" data-project-toggle="safe-water">
+                    <a href="https://www.congressionalappchallenge.us/23-ny01/" target="_blank" rel="noopener noreferrer" class="hover:underline">
+                        Safe Water Operation
+                    </a>
+                    <span class="text-xs text-[hsl(var(--theme-text))] ml-2"> - Congressional App Winner, Webdev/JS/React</span>
+                </h3>
+                <div id="safe-water-details" class="hidden mt-2 text-[hsl(var(--theme-text))] text-sm">
+                    <p>I developed an app that allows Long Island residents to quickly and easily check the <em>real-time quality</em> of their local bodies of water and understand safety through <em>generative AI integration</em>. This project was the winner of the <strong>Congressional App Challenge</strong> for district NY01.</p>
+                </div>
+            </li>
+
+            {/* Greenvim - Regular */}
+            <li class="p-2 border border-[hsl(var(--theme-accent-2))] rounded-lg shadow-sm"
+                style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 0 2px 4px hsl(var(--theme-shadow));">
+                <h3 class="text-base font-semibold cursor-pointer text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))]" data-project-toggle="greenvim">
+                    <a href="https://github.com/green726/greenvim/tree/2025_n32" target="_blank" rel="noopener noreferrer" class="hover:underline">
+                        Greenvim
+                    </a>
+                    <span class="text-xs text-[hsl(var(--theme-text))] ml-2"> - Custom Neovim IDE, Lua/Linux</span>
+                </h3>
+                <div id="greenvim-details" class="hidden mt-2 text-[hsl(var(--theme-text))] text-sm">
+                    <p>A Neovim configuration built to be as <strong>powerful as an IDE</strong> but as <strong>light and fast</strong> as vanilla Vim. Greenvim features a minimalistic look while having as many features as most IDEs.</p>
+                </div>
+            </li>
+        </ul>
+
+        <h2 class="text-2xl font-bold mt-8 mb-4 text-[hsl(var(--theme-text))]">Other Projects</h2>
+        <ul class="list-none space-y-4">
+            {/* Lemelson-MIT InvenTeam - Standout Project */}
+            <li class="p-4 border border-[hsl(var(--theme-link))] rounded-lg shadow-md"
+                style="background-color: hsl(var(--theme-accent) / 0.15); box-shadow: 0 6px 12px hsl(var(--theme-shadow));">
+                <h3 class="text-xl font-bold cursor-pointer text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))]" data-project-toggle="inventeam">
+                    <a href="https://lemelson.mit.edu/teams/cold-spring-harbor-juniorsenior-inventeam" target="_blank" rel="noopener noreferrer" class="hover:underline">
+                        Lemelson-MIT InvenTeam
+                    </a>
+                    <span class="text-sm text-[hsl(var(--theme-text))] ml-4"> - Tick Overpopulation Solution, Founder & President, 3d-Printing/Biology/Business/Design</span>
+                </h3>
+                <div id="inventeam-details" class="hidden mt-3 text-[hsl(var(--theme-text))]">
+                    <p>As Team President & Founder, I founded a <strong>$60k+ grant-winning MIT InvenTeam</strong> dedicated to solving the problem of <em>tick overpopulation</em> in the local community of Long Island and the Northeast.</p>
+                    <ul class="list-disc list-inside mt-2">
+                        <li>Researched tick behavior and attractants in collaboration with the <em>Suffolk County government</em>.</li>
+                        <li>Designed a <em>novel 3D-printed tick deterrence/trapping device</em>.</li>
+                        <li>Presented our work at Town of Huntington board meetings and MIT.</li>
+                    </ul>
+                </div>
+            </li>
+
+            {/* NHRL - Regular (stay same) */}
+            <li class="p-2 border border-[hsl(var(--theme-accent-2))] rounded-lg shadow-sm"
+                style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 0 2px 4px hsl(var(--theme-shadow));">
+                <h3 class="text-base font-semibold cursor-pointer text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))]" data-project-toggle="nhrl">
+                    <a href="https://www.nhrl.io/" target="_blank" rel="noopener noreferrer" class="hover:underline">
+                        NHRL Combat Robotics
+                    </a>
+                    <span class="text-xs text-[hsl(var(--theme-text))] ml-2"> - Co-Captain, 3d-Printing/CAD/Manufacturing</span>
+                </h3>
+                <div id="nhrl-details" class="hidden mt-2 text-[hsl(var(--theme-text))] text-sm">
+                    I was part of the only all-high school NHRL team competing in an international competition, featuring a novel design that inspired other larger teams.
+                </div>
+            </li>
+
+            {/* FRC - Regular (stay same) */}
+            <li class="p-2 border border-[hsl(var(--theme-accent-2))] rounded-lg shadow-sm"
+                style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 0 2px 4px hsl(var(--theme-shadow));">
+                <h3 class="text-base font-semibold cursor-pointer text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))]" data-project-toggle="frc">
+                    <a href="https://github.com/CshCyberhawks" target="_blank" rel="noopener noreferrer" class="hover:underline">
+                        FRC Robotics Team
+                    </a>
+                    <span class="text-xs text-[hsl(var(--theme-text))] ml-2"> - Co-Captain, Java/Kotlin/3d-Printing/Design</span>
+                </h3>
+                <div id="frc-details" class="hidden mt-2 text-[hsl(var(--theme-text))] text-sm">
+                    As co-captain, I built a custom swerve drivetrain complete with no-accelerometer odometry, PIDs, field orientation, and a self-correcting motion-profiled autonomous mode.
+                </div>
+            </li>
+        </ul>
+
+    </div>
 </PageLayout>
+
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('[data-project-toggle]').forEach(toggle => {
+            toggle.addEventListener('click', (event) => {
+                // Prevent default link behavior if clicking the <a> tag directly
+                // The <a> tag is inside the h3, so clicking the h3 will also trigger the link.
+                // We want the link to work, but also the toggle.
+                // If the click target is the <a>, let the default link behavior happen.
+                // If the click target is the span (brief description), toggle the details.
+                // Or if the target is the h3 itself but not the anchor.
+                if (event.target.tagName === 'A' || event.target.closest('a')) {
+                    return; // Let the link navigate
+                }
+
+                const targetId = toggle.dataset.projectToggle + '-details';
+                const detailsDiv = document.getElementById(targetId);
+                if (detailsDiv) {
+                    detailsDiv.classList.toggle('hidden');
+                }
+            });
+        });
+    });
+</script>
