@@ -1,6 +1,6 @@
 ---
 import PageLayout from "@/layouts/Base";
-// import { Image } from "@astrojs/image/components"; // Not used, can remove
+// import { Image } => "@astrojs/image/components"; // Not used, can remove
 // import aboutImg from "../assets/about-astro.png"; // Not used, can remove
 
 const meta = {
@@ -13,7 +13,7 @@ const meta = {
     <div class="space-y-6">
         <h1 class="title text-[hsl(var(--theme-text))]">Selected Research & Other Work</h1>
         <p class="text-[hsl(var(--theme-text))]">
-            Below you may find some of my selected research projects and other works. Click on a project box to expand for more details.
+            Below you may find some of my selected research projects and other works. Click on a project box or the arrow to expand for more details.
         </p>
 
         <h2 class="text-2xl font-bold mt-8 mb-4 text-[hsl(var(--theme-text))]">Research</h2>
@@ -21,12 +21,18 @@ const meta = {
             {/* MLISA - Standout Project */}
             <li class="p-4 border border-[hsl(var(--theme-link))] rounded-lg shadow-md"
                 style="background-color: hsl(var(--theme-accent) / 0.15); box-shadow: 0 6px 12px hsl(var(--theme-shadow));">
-                <h3 class="text-xl font-bold cursor-pointer text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))]" data-project-toggle="mlisa">
+                <h3 class="text-xl font-bold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
                     <a href="https://compas.cs.stonybrook.edu/" target="_blank" rel="noopener noreferrer" class="hover:underline">
                         Stony Brook University COMPAS Lab: MLISA
                     </a>
-                    <span class="text-sm text-[hsl(var(--theme-text))] ml-4"> - Compiler & Architecture Development, Machine Learning, Cpp/ARM/RISCV/LLVM/MLIR/PyTorch</span>
+                    <button class="project-toggle-arrow text-[hsl(var(--theme-text))] text-2xl font-bold leading-none select-none ml-2" data-project-id="mlisa" aria-expanded="false" aria-controls="mlisa-details">
+                        <span class="open-arrow hidden">&#9660;</span> {/* Down arrow */}
+                        <span class="closed-arrow">&#9658;</span> {/* Right arrow */}
+                    </button>
                 </h3>
+                <p class="text-sm text-[hsl(var(--theme-text))] mt-1">
+                    Compiler & Architecture Development, Machine Learning, Cpp/ARM/RISCV/LLVM/MLIR/PyTorch
+                </p>
                 <div id="mlisa-details" class="hidden mt-3 text-[hsl(var(--theme-text))]">
                     <p>I served as the project lead on this research initiative, which incorporated multiple graduate students. My work focused on developing <em>novel compiler infrastructure and architecture</em> for machine learning acceleration hardware.</p>
                     <ul class="list-disc list-inside mt-2">
@@ -39,12 +45,18 @@ const meta = {
             {/* UMich - Regular */}
             <li class="p-2 border border-[hsl(var(--theme-accent-2))] rounded-lg shadow-sm"
                 style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 0 2px 4px hsl(var(--theme-shadow));">
-                <h3 class="text-base font-semibold cursor-pointer text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))]" data-project-toggle="umich">
+                <h3 class="text-base font-semibold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
                     <a href="https://tylr.fun/melds/" target="_blank" rel="noopener noreferrer" class="hover:underline">
                         University of Michigan Future of Programming Lab
                     </a>
-                    <span class="text-xs text-[hsl(var(--theme-text))] ml-2"> - CS Education Software, OCAML/ReasonML/Menhir</span>
+                    <button class="project-toggle-arrow text-[hsl(var(--theme-text))] text-xl font-bold leading-none select-none ml-2" data-project-id="umich" aria-expanded="false" aria-controls="umich-details">
+                        <span class="open-arrow hidden">&#9660;</span>
+                        <span class="closed-arrow">&#9658;</span>
+                    </button>
                 </h3>
+                <p class="text-xs text-[hsl(var(--theme-text))] mt-1">
+                    CS Education Software, OCAML/ReasonML/Menhir
+                </p>
                 <div id="umich-details" class="hidden mt-2 text-[hsl(var(--theme-text))] text-sm">
                     <p>I was the <em>first high school lab member</em> working in Professor Cyrus Omar's FP Lab at the University of Michigan.</p>
                     <ul class="list-disc list-inside mt-2">
@@ -58,12 +70,18 @@ const meta = {
             {/* NYU - Regular */}
             <li class="p-2 border border-[hsl(var(--theme-accent-2))] rounded-lg shadow-sm"
                 style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 0 2px 4px hsl(var(--theme-shadow));">
-                <h3 class="text-base font-semibold cursor-pointer text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))]" data-project-toggle="nyu">
+                <h3 class="text-base font-semibold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
                     <a href="https://journals.aps.org/pre/abstract/10.1103/PhysRevE.110.034122" target="_blank" rel="noopener noreferrer" class="hover:underline">
                         New York University Martiniani Lab
                     </a>
-                    <span class="text-xs text-[hsl(var(--theme-text))] ml-2"> - Computational Physics Algorithm, Rust</span>
+                    <button class="project-toggle-arrow text-[hsl(var(--theme-text))] text-xl font-bold leading-none select-none ml-2" data-project-id="nyu" aria-expanded="false" aria-controls="nyu-details">
+                        <span class="open-arrow hidden">&#9660;</span>
+                        <span class="closed-arrow">&#9658;</span>
+                    </button>
                 </h3>
+                <p class="text-xs text-[hsl(var(--theme-text))] mt-1">
+                    Computational Physics Algorithm, Rust
+                </p>
                 <div id="nyu-details" class="hidden mt-2 text-[hsl(var(--theme-text))] text-sm">
                     <p>I was the <em>only high schooler</em> in this graduate-level research lab, where I studied graduate-level theoretical physics with Professor Stefano Martiniani.</p>
                     <ul class="list-disc list-inside mt-2">
@@ -78,12 +96,18 @@ const meta = {
             {/* SWO - Standout Project */}
             <li class="p-4 border border-[hsl(var(--theme-link))] rounded-lg shadow-md"
                 style="background-color: hsl(var(--theme-accent) / 0.15); box-shadow: 0 6px 12px hsl(var(--theme-shadow));">
-                <h3 class="text-xl font-bold cursor-pointer text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))]" data-project-toggle="swo">
+                <h3 class="text-xl font-bold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
                     <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4661607" target="_blank" rel="noopener noreferrer" class="hover:underline">
                         SWO Wants Options (SWO)
                     </a>
-                    <span class="text-sm text-[hsl(var(--theme-text))] ml-4"> - Compilers, Award-Winning Language Project, C#/LLVM</span>
+                    <button class="project-toggle-arrow text-[hsl(var(--theme-text))] text-2xl font-bold leading-none select-none ml-2" data-project-id="swo" aria-expanded="false" aria-controls="swo-details">
+                        <span class="open-arrow hidden">&#9660;</span>
+                        <span class="closed-arrow">&#9658;</span>
+                    </button>
                 </h3>
+                <p class="text-sm text-[hsl(var(--theme-text))] mt-1">
+                    Compilers, Award-Winning Language Project, C#/LLVM
+                </p>
                 <div id="swo-details" class="hidden mt-3 text-[hsl(var(--theme-text))]">
                     <p>I created a novel general-purpose compiled programming language designed for use in computer science education. This project entailed multiple years of <em>self-teaching</em> and research work in compiler development.</p>
                     <ul class="list-disc list-inside mt-2">
@@ -96,12 +120,18 @@ const meta = {
             {/* Safe Water Operation - Regular */}
             <li class="p-2 border border-[hsl(var(--theme-accent-2))] rounded-lg shadow-sm"
                 style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 0 2px 4px hsl(var(--theme-shadow));">
-                <h3 class="text-base font-semibold cursor-pointer text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))]" data-project-toggle="safe-water">
+                <h3 class="text-base font-semibold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
                     <a href="https://www.congressionalappchallenge.us/23-ny01/" target="_blank" rel="noopener noreferrer" class="hover:underline">
                         Safe Water Operation
                     </a>
-                    <span class="text-xs text-[hsl(var(--theme-text))] ml-2"> - Congressional App Winner, Webdev/JS/React</span>
+                    <button class="project-toggle-arrow text-[hsl(var(--theme-text))] text-xl font-bold leading-none select-none ml-2" data-project-id="safe-water" aria-expanded="false" aria-controls="safe-water-details">
+                        <span class="open-arrow hidden">&#9660;</span>
+                        <span class="closed-arrow">&#9658;</span>
+                    </button>
                 </h3>
+                <p class="text-xs text-[hsl(var(--theme-text))] mt-1">
+                    Congressional App Winner, Webdev/JS/React
+                </p>
                 <div id="safe-water-details" class="hidden mt-2 text-[hsl(var(--theme-text))] text-sm">
                     <p>I developed an app that allows Long Island residents to quickly and easily check the <em>real-time quality</em> of their local bodies of water and understand safety through <em>generative AI integration</em>. This project was the winner of the <strong>Congressional App Challenge</strong> for district NY01.</p>
                 </div>
@@ -110,12 +140,18 @@ const meta = {
             {/* Greenvim - Regular */}
             <li class="p-2 border border-[hsl(var(--theme-accent-2))] rounded-lg shadow-sm"
                 style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 0 2px 4px hsl(var(--theme-shadow));">
-                <h3 class="text-base font-semibold cursor-pointer text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))]" data-project-toggle="greenvim">
+                <h3 class="text-base font-semibold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
                     <a href="https://github.com/green726/greenvim/tree/2025_n32" target="_blank" rel="noopener noreferrer" class="hover:underline">
                         Greenvim
                     </a>
-                    <span class="text-xs text-[hsl(var(--theme-text))] ml-2"> - Custom Neovim IDE, Lua/Linux</span>
+                    <button class="project-toggle-arrow text-[hsl(var(--theme-text))] text-xl font-bold leading-none select-none ml-2" data-project-id="greenvim" aria-expanded="false" aria-controls="greenvim-details">
+                        <span class="open-arrow hidden">&#9660;</span>
+                        <span class="closed-arrow">&#9658;</span>
+                    </button>
                 </h3>
+                <p class="text-xs text-[hsl(var(--theme-text))] mt-1">
+                    Custom Neovim IDE, Lua/Linux
+                </p>
                 <div id="greenvim-details" class="hidden mt-2 text-[hsl(var(--theme-text))] text-sm">
                     <p>A Neovim configuration built to be as <strong>powerful as an IDE</strong> but as <strong>light and fast</strong> as vanilla Vim. Greenvim features a minimalistic look while having as many features as most IDEs.</p>
                 </div>
@@ -127,12 +163,18 @@ const meta = {
             {/* Lemelson-MIT InvenTeam - Standout Project */}
             <li class="p-4 border border-[hsl(var(--theme-link))] rounded-lg shadow-md"
                 style="background-color: hsl(var(--theme-accent) / 0.15); box-shadow: 0 6px 12px hsl(var(--theme-shadow));">
-                <h3 class="text-xl font-bold cursor-pointer text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))]" data-project-toggle="inventeam">
+                <h3 class="text-xl font-bold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
                     <a href="https://lemelson.mit.edu/teams/cold-spring-harbor-juniorsenior-inventeam" target="_blank" rel="noopener noreferrer" class="hover:underline">
                         Lemelson-MIT InvenTeam
                     </a>
-                    <span class="text-sm text-[hsl(var(--theme-text))] ml-4"> - Tick Overpopulation Solution, Founder & President, 3d-Printing/Biology/Business/Design</span>
+                    <button class="project-toggle-arrow text-[hsl(var(--theme-text))] text-2xl font-bold leading-none select-none ml-2" data-project-id="inventeam" aria-expanded="false" aria-controls="inventeam-details">
+                        <span class="open-arrow hidden">&#9660;</span>
+                        <span class="closed-arrow">&#9658;</span>
+                    </button>
                 </h3>
+                <p class="text-sm text-[hsl(var(--theme-text))] mt-1">
+                    Tick Overpopulation Solution, Founder & President, 3d-Printing/Biology/Business/Design
+                </p>
                 <div id="inventeam-details" class="hidden mt-3 text-[hsl(var(--theme-text))]">
                     <p>As Team President & Founder, I founded a <strong>$60k+ grant-winning MIT InvenTeam</strong> dedicated to solving the problem of <em>tick overpopulation</em> in the local community of Long Island and the Northeast.</p>
                     <ul class="list-disc list-inside mt-2">
@@ -146,12 +188,18 @@ const meta = {
             {/* NHRL - Regular (stay same) */}
             <li class="p-2 border border-[hsl(var(--theme-accent-2))] rounded-lg shadow-sm"
                 style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 0 2px 4px hsl(var(--theme-shadow));">
-                <h3 class="text-base font-semibold cursor-pointer text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))]" data-project-toggle="nhrl">
+                <h3 class="text-base font-semibold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
                     <a href="https://www.nhrl.io/" target="_blank" rel="noopener noreferrer" class="hover:underline">
                         NHRL Combat Robotics
                     </a>
-                    <span class="text-xs text-[hsl(var(--theme-text))] ml-2"> - Co-Captain, 3d-Printing/CAD/Manufacturing</span>
+                    <button class="project-toggle-arrow text-[hsl(var(--theme-text))] text-xl font-bold leading-none select-none ml-2" data-project-id="nhrl" aria-expanded="false" aria-controls="nhrl-details">
+                        <span class="open-arrow hidden">&#9660;</span>
+                        <span class="closed-arrow">&#9658;</span>
+                    </button>
                 </h3>
+                <p class="text-xs text-[hsl(var(--theme-text))] mt-1">
+                    Co-Captain, 3d-Printing/CAD/Manufacturing
+                </p>
                 <div id="nhrl-details" class="hidden mt-2 text-[hsl(var(--theme-text))] text-sm">
                     I was part of the only all-high school NHRL team competing in an international competition, featuring a novel design that inspired other larger teams.
                 </div>
@@ -160,12 +208,18 @@ const meta = {
             {/* FRC - Regular (stay same) */}
             <li class="p-2 border border-[hsl(var(--theme-accent-2))] rounded-lg shadow-sm"
                 style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 0 2px 4px hsl(var(--theme-shadow));">
-                <h3 class="text-base font-semibold cursor-pointer text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))]" data-project-toggle="frc">
+                <h3 class="text-base font-semibold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
                     <a href="https://github.com/CshCyberhawks" target="_blank" rel="noopener noreferrer" class="hover:underline">
                         FRC Robotics Team
                     </a>
-                    <span class="text-xs text-[hsl(var(--theme-text))] ml-2"> - Co-Captain, Java/Kotlin/3d-Printing/Design</span>
+                    <button class="project-toggle-arrow text-[hsl(var(--theme-text))] text-xl font-bold leading-none select-none ml-2" data-project-id="frc" aria-expanded="false" aria-controls="frc-details">
+                        <span class="open-arrow hidden">&#9660;</span>
+                        <span class="closed-arrow">&#9658;</span>
+                    </button>
                 </h3>
+                <p class="text-xs text-[hsl(var(--theme-text))] mt-1">
+                    Co-Captain, Java/Kotlin/3d-Printing/Design
+                </p>
                 <div id="frc-details" class="hidden mt-2 text-[hsl(var(--theme-text))] text-sm">
                     As co-captain, I built a custom swerve drivetrain complete with no-accelerometer odometry, PIDs, field orientation, and a self-correcting motion-profiled autonomous mode.
                 </div>
@@ -177,24 +231,54 @@ const meta = {
 
 <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('[data-project-toggle]').forEach(toggle => {
-            toggle.addEventListener('click', (event) => {
-                // Prevent default link behavior if clicking the <a> tag directly
-                // The <a> tag is inside the h3, so clicking the h3 will also trigger the link.
-                // We want the link to work, but also the toggle.
-                // If the click target is the <a>, let the default link behavior happen.
-                // If the click target is the span (brief description), toggle the details.
-                // Or if the target is the h3 itself but not the anchor.
-                if (event.target.tagName === 'A' || event.target.closest('a')) {
-                    return; // Let the link navigate
-                }
+        document.querySelectorAll('li').forEach(projectListItem => {
+            // Find the toggle button and details div within THIS specific list item
+            const toggleButton = projectListItem.querySelector('.project-toggle-arrow');
+            const detailsDiv = projectListItem.querySelector('.hidden[id$="-details"]');
+            const projectLink = projectListItem.querySelector('h3 a'); // The actual link element
 
-                const targetId = toggle.dataset.projectToggle + '-details';
-                const detailsDiv = document.getElementById(targetId);
-                if (detailsDiv) {
+            if (toggleButton && detailsDiv && projectLink) {
+                // Function to update the arrow direction and ARIA attribute
+                const updateArrow = () => {
+                    const isOpen = !detailsDiv.classList.contains('hidden');
+                    if (isOpen) {
+                        toggleButton.querySelector('.open-arrow').classList.remove('hidden');
+                        toggleButton.querySelector('.closed-arrow').classList.add('hidden');
+                        toggleButton.setAttribute('aria-expanded', 'true');
+                    } else {
+                        toggleButton.querySelector('.open-arrow').classList.add('hidden');
+                        toggleButton.querySelector('.closed-arrow').classList.remove('hidden');
+                        toggleButton.setAttribute('aria-expanded', 'false');
+                    }
+                };
+
+                // Initial arrow state (closed by default)
+                updateArrow();
+
+                // Click event for the entire list item (excluding the link)
+                projectListItem.addEventListener('click', (event) => {
+                    // If the click originated from the link or any of its children, do nothing (let the link handle it)
+                    if (projectLink.contains(event.target) || event.target === projectLink) {
+                        return;
+                    }
+
+                    // If the click originated from the toggle button or its children, do nothing (button's listener will handle it)
+                    if (toggleButton.contains(event.target) || event.target === toggleButton) {
+                        return;
+                    }
+
+                    // Otherwise, toggle the details
                     detailsDiv.classList.toggle('hidden');
-                }
-            });
+                    updateArrow(); // Update arrow after toggling
+                });
+
+                // Click event for the specific toggle button
+                toggleButton.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Stop the click from bubbling up to the li
+                    detailsDiv.classList.toggle('hidden');
+                    updateArrow(); // Update arrow after toggling
+                });
+            }
         });
     });
 </script>
