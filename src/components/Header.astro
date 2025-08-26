@@ -29,7 +29,8 @@ const url = new URL(Astro.request.url);
 			class="logo"
 			aria-current={url.pathname === "/" ? "page" : false}
 		>
-            <img src = "/SWOLogo.svg" alt="SWOLogo"></img>
+            <!-- <img src = "/SWOLogo.svg" alt="SWOLogo"></img> -->
+            <img src = "/profile.png" alt="Profile Photo"></img>
 			<span>Milan Lustig</span>
 		</a>
 		<nav id="navigation-menu" aria-label="Main">
@@ -82,13 +83,17 @@ const url = new URL(Astro.request.url);
 		.logo {
 			@apply inline-flex items-center grayscale hover:filter-none sm:relative sm:inline-block;
 
-			img {
-				@apply mr-3 h-10 w-6 sm:absolute sm:left-[-6.0rem] sm:mr-0 sm:h-20 sm:w-20;
-			}
+          img {
+            /* Existing size adjustments */
+            @apply mr-5 h-14 w-11 sm:absolute sm:left-[-8.0rem] sm:mr-0;
+            /* Move up by adding a negative top margin */
+            @apply -mt-2 sm:-mt-4; /* Adjust -mt-2 for smaller screens and -mt-4 for sm and larger */
+            @apply h-28 w-28;
+          }
 
-			> span {
-				@apply text-xl font-bold sm:text-2xl;
-			}
+          > span {
+            @apply text-xl font-bold sm:text-2xl;
+          }
 		}
 
 		#toggle-navigation-menu {

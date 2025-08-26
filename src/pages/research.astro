@@ -13,14 +13,14 @@ const meta = {
     <div class="space-y-6">
         <h1 class="title text-[hsl(var(--theme-text))]">Selected Research & Other Work</h1>
         <p class="text-[hsl(var(--theme-text))]">
-            Below you may find some of my selected research projects and other works. Click on a project box or the arrow to expand for more details.
+            Here's a few random research projects and other fun things! Click to read more.
         </p>
 
         <h2 class="text-2xl font-bold mt-8 mb-4 text-[hsl(var(--theme-text))]">Research</h2>
         <ul class="list-none space-y-4">
             {/* MLISA - Standout Project */}
-            <li class="p-4 border border-[hsl(var(--theme-link) / 0.5)] shadow-md dark:border-gray-600"
-                style="background-color: hsl(var(--theme-accent) / 0.15); box-shadow: 0 6px 12px hsl(var(--theme-shadow));">
+            <li class="p-4 shadow-md "
+                style="background-color: hsl(var(--theme-accent) / 0.15); box-shadow: 4px 6px 12px hsl(var(--theme-shadow));">
                 <h3 class="text-xl font-bold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
                     {"/compas.png" && <img src="/compas.png" alt="MLISA architecture diagram" class="max-w-[8rem] max-h-16 w-auto h-auto mr-3 rounded-lg transition-all duration-300 object-contain dark:brightness-90" />}
                     <a href="https://compas.cs.stonybrook.edu/" target="_blank" rel="noopener noreferrer" class="hover:underline">
@@ -32,23 +32,24 @@ const meta = {
                     </button>
                 </h3>
                 <p class="text-sm text-[hsl(var(--theme-text))] mt-1">
-                    Compiler & Architecture Development, Machine Learning, Cpp/ARM/RISCV/LLVM/MLIR/PyTorch
+                    Compiler/Architecture/Machine Learning, Cpp/LLVM/Python/Torch/MLIR/Cuda
                 </p>
                 <div id="mlisa-details" class="hidden mt-3 text-[hsl(var(--theme-text))]">
                     {"" && <div class="my-4 mx-auto max-w-[200px] transition-all duration-300 group-[]:scale-100 scale-75">
                         <img src="" alt="MLISA architecture diagram" class="rounded-xl shadow-lg w-full h-auto object-contain dark:invert dark:brightness-90" />
                     </div>}
-                    <p>I served as the project lead on this research initiative, which incorporated multiple graduate students. My work focused on developing <em>novel compiler infrastructure and architecture</em> for machine learning acceleration hardware.</p>
+                    <p>Served as the project lead on research initiative incorporating multiple graduate students. Focused on developing <em>novel compiler infrastructure and architecture</em> for machine learning acceleration hardware. </p>
                     <ul class="list-disc list-inside mt-2">
-                        <li>This work began as a <em>Simons Fellow</em>, a highly competitive program with a &lt;4% acceptance rate.</li>
-                        <li>It subsequently continued as a <em>full-time Research Assistant</em> in Prof. Mike Ferdman's COMPAS Lab at Stony Brook University.</li>
+                        <li>Work began as a <em>Simons Fellow</em> (competitive research fellowship with a &lt;4% acceptance rate)</li>
+                        <li>Continued as a <em>full-time paid Research Assistant</em></li>
+                        <li> Supervised by professor Mike Ferdman in collaboration with Professor Peter Milder (SBU) and Prasanth Chatarasi (IBM). Thanks to SUNY and IBM for funding this research.</li>
                     </ul>
                 </div>
             </li>
 
             {/* UMich - Regular */}
-            <li class="p-2 border border-[hsl(var(--theme-accent-2) / 0.5)] shadow-sm dark:border-gray-600"
-                style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 0 2px 4px hsl(var(--theme-shadow));">
+            <li class="p-2 shadow-sm "
+                style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 4px 2px 4px hsl(var(--theme-shadow));">
                 <h3 class="text-base font-semibold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
                     {"/umich_logo.png" && <img src="/umich_logo.png" alt="FP Lab interface screenshot" class="max-w-[6rem] max-h-12 w-auto h-auto mr-2 rounded-lg transition-all duration-300 object-contain dark:brightness-90" />}
                     <a href="https://tylr.fun/melds/" target="_blank" rel="noopener noreferrer" class="hover:underline">
@@ -60,13 +61,13 @@ const meta = {
                     </button>
                 </h3>
                 <p class="text-xs text-[hsl(var(--theme-text))] mt-1">
-                    CS Education Software, OCAML/ReasonML/Menhir
+                    Programming Language Theory, Ocaml/Reason/Menhir
                 </p>
                 <div id="umich-details" class="hidden mt-2 text-[hsl(var(--theme-text))] text-sm">
                     {"" && <div class="my-4 mx-auto max-w-[200px]">
                         <img src="" alt="FP Lab interface screenshot" class="rounded-xl shadow-lg w-full h-auto object-contain dark:invert dark:brightness-90" />
                     </div>}
-                    <p>I was the <em>first high school lab member</em> working in Professor Cyrus Omar's FP Lab at the University of Michigan.</p>
+                    <p><em>First high school lab member</em> working in Professor Cyrus Omar's FP Lab</p>
                     <ul class="list-disc list-inside mt-2">
                         <li>Collaborated with PhD students on thesis projects to develop computer science education software.</li>
                         <li>The software developed is currently used in multiple university courses.</li>
@@ -76,8 +77,8 @@ const meta = {
             </li>
 
             {/* NYU - Regular */}
-            <li class="p-2 border border-[hsl(var(--theme-accent-2) / 0.5)] shadow-sm dark:border-gray-600"
-                style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 0 2px 4px hsl(var(--theme-shadow));">
+            <li class="p-2 shadow-sm"
+                style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 4px 2px 4px hsl(var(--theme-shadow));">
                 <h3 class="text-base font-semibold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
                     {"/nyu_logo.png" && <img src="/nyu_logo.png" alt="Physics simulation visualization" class="max-w-[6rem] max-h-12 w-auto h-auto mr-2 rounded-lg transition-all duration-300 object-contain dark:brightness-90" />}
                     <a href="https://journals.aps.org/pre/abstract/10.1103/PhysRevE.110.034122" target="_blank" rel="noopener noreferrer" class="hover:underline">
@@ -89,7 +90,7 @@ const meta = {
                     </button>
                 </h3>
                 <p class="text-xs text-[hsl(var(--theme-text))] mt-1">
-                    Computational Physics Algorithm, Rust
+                Computational Physics, Rust/HPC/Parallelization 
                 </p>
                 <div id="nyu-details" class="hidden mt-2 text-[hsl(var(--theme-text))] text-sm">
                     {"" && <div class="my-4 mx-auto max-w-[200px]">
@@ -106,8 +107,8 @@ const meta = {
         <h2 class="text-2xl font-bold mt-8 mb-4 text-[hsl(var(--theme-text))]">Independent Projects</h2>
         <ul class="list-none space-y-4">
             {/* SWO - Standout Project */}
-            <li class="p-4 border border-[hsl(var(--theme-link) / 0.5)] shadow-md dark:border-gray-600"
-                style="background-color: hsl(var(--theme-accent) / 0.15); box-shadow: 0 6px 12px hsl(var(--theme-shadow));">
+            <li class="p-4 shadow-md"
+                style="background-color: hsl(var(--theme-accent) / 0.15); box-shadow: 4px 6px 12px hsl(var(--theme-shadow));">
                 <h3 class="text-xl font-bold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
                     {"" && <img src="" alt="SWO language example code" class="max-w-[8rem] max-h-16 w-auto h-auto mr-3 rounded-lg transition-all duration-300 object-contain dark:brightness-90" />}
                     <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4661607" target="_blank" rel="noopener noreferrer" class="hover:underline">
@@ -119,13 +120,13 @@ const meta = {
                     </button>
                 </h3>
                 <p class="text-sm text-[hsl(var(--theme-text))] mt-1">
-                    Compilers, Award-Winning Language Project, C#/LLVM
+                     STS/ISEF, Compilers/C#/LLVM
                 </p>
                 <div id="swo-details" class="hidden mt-3 text-[hsl(var(--theme-text))]">
                     {"" && <div class="my-4 mx-auto max-w-[200px]">
                         <img src="" alt="SWO language example code" class="rounded-xl shadow-lg w-full h-auto object-contain dark:invert dark:brightness-90" />
                     </div>}
-                    <p>I created a novel general-purpose compiled programming language designed for use in computer science education. This project entailed multiple years of <em>self-teaching</em> and research work in compiler development.</p>
+                    <p>Was feeling a bit curious and went down a (years long) rabbit hole. Ended up building a general-purpose compiled programming language designed for use in computer science education. This project involved <em>self-teaching graduate-level CS</em> for compiler development.</p>
                     <ul class="list-disc list-inside mt-2">
                         <li>Received the <strong>3rd Place Grand Award</strong> in the <em>International Science and Engineering Fair</em> (ISEF).</li>
                         <li>Recognized as a <strong>Regeneron Science Talent Search</strong> (STS) <em>Top 300 Scholar</em> in America's oldest and most prestigious science competition.</li>
@@ -134,8 +135,8 @@ const meta = {
             </li>
 
             {/* Safe Water Operation - Regular */}
-            <li class="p-2 border border-[hsl(var(--theme-accent-2) / 0.5)] shadow-sm dark:border-gray-600"
-                style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 0 2px 4px hsl(var(--theme-shadow));">
+            <li class="p-2 shadow-sm "
+                style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 4px 2px 4px hsl(var(--theme-shadow));">
                 <h3 class="text-base font-semibold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
                     {"" && <img src="" alt="Water quality app interface" class="max-w-[6rem] max-h-12 mr-2 rounded-lg transition-all duration-300 object-contain dark:brightness-90" />}
                     <a href="https://www.congressionalappchallenge.us/23-ny01/" target="_blank" rel="noopener noreferrer" class="hover:underline">
@@ -147,19 +148,19 @@ const meta = {
                     </button>
                 </h3>
                 <p class="text-xs text-[hsl(var(--theme-text))] mt-1">
-                    Congressional App Winner, Webdev/JS/React
+                    Congressional App, Webdev/JS/React
                 </p>
                 <div id="safe-water-details" class="hidden mt-2 text-[hsl(var(--theme-text))] text-sm">
                     {"" && <div class="my-4 mx-auto max-w-[200px]">
                         <img src="" alt="Water quality app interface" class="rounded-xl shadow-lg w-full h-auto object-contain dark:invert dark:brightness-90" />
                     </div>}
-                    <p>I developed an app that allows Long Island residents to quickly and easily check the <em>real-time quality</em> of their local bodies of water and understand safety through <em>generative AI integration</em>. This project was the winner of the <strong>Congressional App Challenge</strong> for district NY01.</p>
+                    <p>Developed an app that allows Long Island residents to quickly and easily check the <em>real-time quality</em> of their local bodies of water and understand safety through <em>generative AI integration</em>l; won the <strong>Congressional App Challenge</strong></p>
                 </div>
             </li>
 
             {/* Greenvim - Regular */}
-            <li class="p-2 border border-[hsl(var(--theme-accent-2) / 0.5)] shadow-sm dark:border-gray-600"
-                style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 0 2px 4px hsl(var(--theme-shadow));">
+            <li class="p-2 shadow-sm"
+                style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 4px 2px 4px hsl(var(--theme-shadow));">
                 <h3 class="text-base font-semibold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
                     {"" && <img src="" alt="Greenvim editor screenshot" class="max-w-[6rem] max-h-12 mr-2 rounded-lg transition-all duration-300 object-contain dark:brightness-90" />}
                     <a href="https://github.com/green726/greenvim/tree/2025_n32" target="_blank" rel="noopener noreferrer" class="hover:underline">
@@ -171,13 +172,13 @@ const meta = {
                     </button>
                 </h3>
                 <p class="text-xs text-[hsl(var(--theme-text))] mt-1">
-                    Custom Neovim IDE, Lua/Linux
+                    Lua/Linux/Sysadmin
                 </p>
                 <div id="greenvim-details" class="hidden mt-2 text-[hsl(var(--theme-text))] text-sm">
                     {"" && <div class="my-4 mx-auto max-w-[200px]">
                         <img src="" alt="Greenvim editor screenshot" class="rounded-xl shadow-lg w-full h-auto object-contain dark:invert dark:brightness-90" />
                     </div>}
-                    <p>A Neovim configuration built to be as <strong>powerful as an IDE</strong> but as <strong>light and fast</strong> as vanilla Vim. Greenvim features a minimalistic look while having as many features as most IDEs.</p>
+                    <p>Just my Neovim config in eternal development for ~5 years. "I use vim btw"</p>
                 </div>
             </li>
         </ul>
@@ -185,8 +186,8 @@ const meta = {
         <h2 class="text-2xl font-bold mt-8 mb-4 text-[hsl(var(--theme-text))]">Other Projects</h2>
         <ul class="list-none space-y-4">
             {/* Lemelson-MIT InvenTeam - Standout Project */}
-            <li class="p-4 border border-[hsl(var(--theme-link) / 0.5)] shadow-md dark:border-gray-600"
-                style="background-color: hsl(var(--theme-accent) / 0.15); box-shadow: 0 6px 12px hsl(var(--theme-shadow));">
+            <li class="p-4 shadow-md"
+                style="background-color: hsl(var(--theme-accent) / 0.15); box-shadow: 4px 6px 12px hsl(var(--theme-shadow));">
                 <h3 class="text-xl font-bold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
                     {"" && <img src="" alt="InvenTeam device prototype" class="w-32 h-16 mr-3 rounded-lg transition-all duration-300 object-cover dark:brightness-90" />}
                     <a href="https://lemelson.mit.edu/teams/cold-spring-harbor-juniorsenior-inventeam" target="_blank" rel="noopener noreferrer" class="hover:underline">
@@ -198,21 +199,21 @@ const meta = {
                     </button>
                 </h3>
                 <p class="text-sm text-[hsl(var(--theme-text))] mt-1">
-                    Tick Overpopulation Solution, Founder & President, 3d-Printing/Biology/Business/Design
+                    Manufcaturing/Biology/Business/Design
                 </p>
                 <div id="inventeam-details" class="hidden mt-3 text-[hsl(var(--theme-text))]">
-                    <p>As Team President & Founder, I founded a <strong>$60k+ grant-winning MIT InvenTeam</strong> dedicated to solving the problem of <em>tick overpopulation</em> in the local community of Long Island and the Northeast.</p>
+                    <p>President & founder of a <strong>$60k+ grant-winning MIT InvenTeam</strong> dedicated to solving the problem of <em>tick overpopulation</em> on Long Island.</p>
                     <ul class="list-disc list-inside mt-2">
                         <li>Researched tick behavior and attractants in collaboration with the <em>Suffolk County government</em>.</li>
                         <li>Designed a <em>novel 3D-printed tick deterrence/trapping device</em>.</li>
-                        <li>Presented our work at Town of Huntington board meetings and MIT.</li>
+                        <li>Presented our work to government officials and at MIT.</li>
                     </ul>
                 </div>
             </li>
 
             {/* NHRL - Regular (stay same) */}
-            <li class="p-2 border border-[hsl(var(--theme-accent-2) / 0.5)] shadow-sm dark:border-gray-600"
-                style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 0 2px 4px hsl(var(--theme-shadow));">
+            <li class="p-2 shadow-sm"
+                style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 4px 2px 4px hsl(var(--theme-shadow));">
                 <h3 class="text-base font-semibold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
                     <a href="https://www.nhrl.io/" target="_blank" rel="noopener noreferrer" class="hover:underline">
                         NHRL Combat Robotics
@@ -223,7 +224,7 @@ const meta = {
                     </button>
                 </h3>
                 <p class="text-xs text-[hsl(var(--theme-text))] mt-1">
-                    Co-Captain, 3d-Printing/CAD/Manufacturing
+                    3d-Printing/CAD/Manufacturing
                 </p>
                 <div id="nhrl-details" class="hidden mt-2 text-[hsl(var(--theme-text))] text-sm">
                     I was part of the only all-high school NHRL team competing in an international competition, featuring a novel design that inspired other larger teams.
@@ -231,8 +232,8 @@ const meta = {
             </li>
 
             {/* FRC - Regular (stay same) */}
-            <li class="p-2 border border-[hsl(var(--theme-accent-2) / 0.5)] shadow-sm dark:border-gray-600"
-                style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 0 2px 4px hsl(var(--theme-shadow));">
+            <li class="p-2 shadow-sm"
+                style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 4px 2px 4px hsl(var(--theme-shadow));">
                 <h3 class="text-base font-semibold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
                     <a href="https://github.com/CshCyberhawks" target="_blank" rel="noopener noreferrer" class="hover:underline">
                         FRC Robotics Team
@@ -243,7 +244,7 @@ const meta = {
                     </button>
                 </h3>
                 <p class="text-xs text-[hsl(var(--theme-text))] mt-1">
-                    Co-Captain, Java/Kotlin/3d-Printing/Design
+                Co-Captain, Java/Kotlin/Fabrication/CAD/Design
                 </p>
                 <div id="frc-details" class="hidden mt-2 text-[hsl(var(--theme-text))] text-sm">
                     As co-captain, I built a custom swerve drivetrain complete with no-accelerometer odometry, PIDs, field orientation, and a self-correcting motion-profiled autonomous mode.
