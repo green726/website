@@ -1,0 +1,191 @@
+<!-- <div id="terminal" class="font-mono text-sm text-gray-400 mt-4 mb-2"> -->
+<!--   <span class="text-green-400 mr-2">$</span> -->
+<!--   <span id="terminal-text"></span> -->
+<!--   <span id="cursor" class="ml-1"></span> -->
+<!-- </div> -->
+<div id="terminal" class="font-mono text-3xl text-gray-400 mt-8 mb-6">
+  <span class="text-green-400 mr-4">$</span> <span id="terminal-text"></span>
+  <span id="cursor" class="ml-2"></span>
+</div>
+
+<style>
+  #terminal {
+    /* This creates the subtle shadow under the text itself, not a box */
+      /* text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3); */
+  }
+  #cursor {
+    display: inline-block;
+    background-color: #a3a3a3; /* A neutral gray cursor */
+    width: 8px; /* Width of the cursor */
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink {
+    from, to { background-color: transparent }
+    50% { background-color: #a3a3a3; }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const terminalText = document.getElementById('terminal-text');
+    const cursor = document.getElementById('cursor');
+    const terminal = document.getElementById('terminal');
+    if (!terminalText || !cursor || !terminal) return;
+
+    terminal.commands = [
+      // Original Commands
+      "git status",
+      "astro build",
+      "tcc -run main.c",
+      "curl -L https://lustig.dev",
+      "gcc -o main main.c -O3 -march=native",
+      "cat /proc/cpuinfo | grep 'model name'",
+
+      // GCC / Clang Compiler Commands
+      "clang -o app main.c -Wall -Wextra -g",
+      "g++ -std=c++20 -o app main.cpp",
+      "gcc -S -O2 main.c -o main.s",
+      "gcc -E main.c -o main.i",
+
+      // LLVM Toolchain Commands
+      "clang -S -emit-llvm main.c -o main.ll",
+      "clang -c -emit-llvm main.c -o main.bc",
+      "opt -S -O3 main.ll -o main.opt.ll",
+      "llc main.ll -o main.s",
+      "lli main.ll",
+      "llvm-dis < main.bc > main.ll",
+      "clang-format -i main.c",
+
+      // Build Systems
+      "make clean && make",
+      "cmake -B build && cmake --build build",
+      "ninja -C build",
+
+      // Profiling & Tracing
+      "valgrind --leak-check=full ./main",
+      "perf record ./main && perf report",
+      "strace ./main",
+
+      // Binary & Object File Inspection
+      "objdump -d ./main",
+      "nm -C ./main",
+      "readelf -h ./main",
+      "ldd ./main",
+      "file ./main",
+      "size ./main",
+
+      // System & Hardware Info
+      "lscpu",
+      "uname -a",
+      "free -h",
+      "dmesg | tail",
+
+      // More Git
+      "git diff --staged",
+      "git log --oneline --graph --decorate",
+
+      // --- Added Commands ---
+
+      // GDB (GNU Debugger) Commands
+      "gdb -tui ./main",                        // Start GDB with a Text User Interface
+      "gdb --args ./main -arg1 val1",           // Start GDB and pass command-line arguments to the program
+      "gdb -p $(pidof my_app)",                 // Attach GDB to an already running process
+      "(gdb) break main.c:42",                  // Set a breakpoint at a specific line in a file
+      "(gdb) info breakpoints",                 // List all breakpoints
+      "(gdb) watch my_variable",                // Set a watchpoint to break when a variable's value changes
+      "(gdb) p my_variable",                    // Print the current value of a variable
+      "(gdb) backtrace",                        // Print the call stack
+      "(gdb) layout asm",                       // Display the assembly code alongside the source
+      "(gdb) disassemble main",                 // Disassemble a function
+
+      // LLDB (LLVM Debugger) Commands
+      "lldb ./main",                            // Start LLDB
+      "process launch -- -arg1 val1",           // Launch the process with arguments within LLDB
+      "breakpoint set --file main.c --line 42", // Set a breakpoint (equivalent to `b main.c:42`)
+      "watchpoint set variable my_variable",    // Set a watchpoint on a variable
+      "frame variable my_variable",             // Print variables in the current stack frame
+      "bt",                                     // Show the call stack (backtrace)
+      "disassemble --frame",                    // Disassemble the current function
+      "expression my_variable = 20",            // Change a variable's value during a debug session
+
+      // MLIR (Multi-Level IR) Commands
+      "clang -S -emit-mlir main.c -o main.mlir", // (Conceptual) Emit MLIR from C code - requires specific Clang builds
+      "mlir-opt --pass-pipeline='builtin.func(linalg-bufferize,convert-linalg-to-loops)' main.mlir", // Apply an optimization pass pipeline
+      "mlir-translate --mlir-to-llvmir main.mlir", // Translate MLIR to LLVM IR
+      "mlir-tblgen -gen-op-defs -I /path/to/mlir/include my_dialect.td", // Generate C++ operation definitions from a TableGen file
+    ];
+
+    let commandIndex = 0;
+    let letterIndex = 0;
+    let isDeleting = false;
+    let timeoutId = null;
+
+    const typingSpeed = 100; // Time in ms between each character
+    const deletingSpeed = 50;
+    const delayBetweenCommands = 1500; // Time to wait after a command is typed
+
+    function type() {
+      if (!terminal.commands || terminal.commands.length === 0) {
+        terminalText.textContent = '';
+        timeoutId = setTimeout(type, delayBetweenCommands);
+        return;
+      }
+
+      if (commandIndex >= terminal.commands.length) {
+        commandIndex = 0;
+      }
+
+      const currentCommand = terminal.commands[commandIndex];
+      
+      if (isDeleting) {
+        terminalText.textContent = currentCommand.substring(0, letterIndex - 1);
+        letterIndex--;
+        if (letterIndex <= 0) {
+          letterIndex = 0;
+          isDeleting = false;
+          
+          let nextCommandIndex = commandIndex;
+          if (terminal.commands.length > 1) {
+            do {
+              nextCommandIndex = Math.floor(Math.random() * terminal.commands.length);
+            } while (nextCommandIndex === commandIndex);
+          } else {
+            nextCommandIndex = 0;
+          }
+          commandIndex = nextCommandIndex;
+        }
+      } else {
+        terminalText.textContent = currentCommand.substring(0, letterIndex + 1);
+        letterIndex++;
+        if (letterIndex >= currentCommand.length) {
+          letterIndex = currentCommand.length;
+          isDeleting = true;
+          timeoutId = setTimeout(type, delayBetweenCommands);
+          return;
+        }
+      }
+
+      const currentSpeed = isDeleting ? deletingSpeed : typingSpeed;
+      timeoutId = setTimeout(type, currentSpeed);
+    }
+
+    function startAnimation() {
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+        letterIndex = 0;
+        isDeleting = false;
+        
+        if (terminal.commands && terminal.commands.length > 0) {
+            commandIndex = Math.floor(Math.random() * terminal.commands.length);
+        } else {
+            commandIndex = 0;
+        }
+        type();
+    }
+
+    terminal.startAnimation = startAnimation;
+
+    startAnimation();
+  });
+</script>

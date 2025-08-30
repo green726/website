@@ -5,10 +5,11 @@ import SocialList from "@/components/SocialList";
 import { sortMDByDate } from "@/util";
 import type { Post } from "@/types";
 import { getNonDrafts } from "src/util"
+import TerminalAnimation from "@/components/TerminalAnimation";
 
 const meta = {
-	title: "Milan Lustig",
-	description: "Blog | Portfolio",
+    title: "Milan Lustig",
+    description: "Blog | Portfolio",
 };
 
 const MAX_POSTS = 10;
@@ -20,17 +21,21 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 <PageLayout meta={meta}>
 
 <section>
-  <h1 class="mb-6 title">Hello World</h1>
+    <!-- <h1 class="mb-6 title">Hello World</h1> -->
+
+    <TerminalAnimation />
+
   <p class="callout">
-  Hey! I'm Milan, a computer systems researcher and freshman at Harvard University (co '29) studying Computer Science.
+    Hey! I'm Milan, a computer systems researcher and freshman at Harvard University (co '29) studying Computer Science.
   </p>
+
   <p>
-  I've worked (or am currently working) with research laboratories at  <strong>University of Michigan, Stony Brook University, and New York University </strong>. My experiences cross a diverse range of fields from statistical mechanics (physics) to programming language theory. 
+    I've worked (or am currently working) with research laboratories at <strong>University of Michigan, Stony Brook University, and New York University </strong>. My experiences cross a diverse range of fields from statistical mechanics (physics) to programming language theory.  
     <br />
   </p>
   <p>
     <br />
-    My main passion is in the areas of <strong>compilers, programming languages, and "low-level" computer systems</strong>. Currently, I am interested in the relationship between these fields and machine learning. In particular, how to <i>change the basic thoughts and ideas</i> behind compilers and computer systems to improve efficiency of machine learning models.
+    My main passion is in the area of <strong>compilers, programming languages, and "low-level" computer systems</strong>. Currently, I am interested in the relationship between these fields and machine learning. In particular, how to <i>change the basic thoughts and ideas</i> behind compilers and computer systems to improve efficiency of machine learning models.
     <br />
     </p>
 </section>

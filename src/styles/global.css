@@ -1,5 +1,17 @@
 @tailwind base;
 @layer base {
+
+
+    .project-details {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.3s ease;
+    }
+
+    .project-details.open {
+      max-height: 1000px; /* large enough to fit content */
+    }
+
 	:root {
 		color-scheme: light;
 		--theme-bg: 0 0% 98%;

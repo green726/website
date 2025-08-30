@@ -1,45 +1,46 @@
 ---
 import PageLayout from "@/layouts/Base";
-// import { Image } => "@astrojs/image/components"; // Not used, can remove
-// import aboutImg from "../assets/about-astro.png"; // Not used, can remove
+import TerminalAnimation from "@/components/TerminalAnimation";
 
 const meta = {
-    title: "Projects", // Changed title to be more general for a portfolio
+    title: "Projects",
     description: "Selected Research & Other Projects",
 };
 ---
 
 <PageLayout meta={meta}>
-    <div class="space-y-6">
+    <div class="space-y-6 w-full max-w-full">
         <h1 class="title text-[hsl(var(--theme-text))]">Selected Research & Other Work</h1>
         <p class="text-[hsl(var(--theme-text))]">
-            Here's a few random research projects and other fun things! Click to read more.
+            Here's a few random research projects and other fun things! Click to open a pop-up with more details.
         </p>
 
         <h2 class="text-2xl font-bold mt-8 mb-4 text-[hsl(var(--theme-text))]">Research</h2>
-        <ul class="list-none space-y-4">
+        <ul class="list-none space-y-4 max-w-full w-full">
             {/* MLISA - Standout Project */}
-            <li class="p-4 shadow-md "
+            <li class="project-item p-4 shadow-md w-full cursor-pointer transition-shadow duration-300 hover:shadow-lg"
+                data-project-key="mlisa"
                 style="background-color: hsl(var(--theme-accent) / 0.15); box-shadow: 4px 6px 12px hsl(var(--theme-shadow));">
-                <h3 class="text-xl font-bold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
-                    {"/compas.png" && <img src="/compas.png" alt="MLISA architecture diagram" class="max-w-[8rem] max-h-16 w-auto h-auto mr-3 rounded-lg transition-all duration-300 object-contain dark:brightness-90" />}
-                    <a href="https://compas.cs.stonybrook.edu/" target="_blank" rel="noopener noreferrer" class="hover:underline">
-                        Stony Brook University COMPAS Lab: MLISA
-                    </a>
-                    <button class="project-toggle-arrow text-[hsl(var(--theme-text))] text-2xl font-bold leading-none select-none ml-2" data-project-id="mlisa" aria-expanded="false" aria-controls="mlisa-details">
-                        <span class="open-arrow hidden">&#9660;</span> {/* Down arrow */}
-                        <span class="closed-arrow">&#9658;</span> {/* Right arrow */}
-                    </button>
-                </h3>
-                <p class="text-sm text-[hsl(var(--theme-text))] mt-1">
-                    Compiler/Architecture/Machine Learning, Cpp/LLVM/Python/Torch/MLIR/Cuda
-                </p>
-                <div id="mlisa-details" class="hidden mt-3 text-[hsl(var(--theme-text))]">
-                    {"" && <div class="my-4 mx-auto max-w-[200px] transition-all duration-300 group-[]:scale-100 scale-75">
-                        <img src="" alt="MLISA architecture diagram" class="rounded-xl shadow-lg w-full h-auto object-contain dark:invert dark:brightness-90" />
-                    </div>}
-                    <p>Served as the project lead on research initiative incorporating multiple graduate students. Focused on developing <em>novel compiler infrastructure and architecture</em> for machine learning acceleration hardware. </p>
-                    <ul class="list-disc list-inside mt-2">
+                <div class="w-full">
+                    <div class="flex items-start justify-between gap-3 mb-1 w-full">
+                        <div class="flex items-center gap-3 min-w-0 flex-1">
+                            {"/compas.png" && <img src="/compas.png" alt="MLISA architecture diagram" class="flex-shrink-0 max-w-[8rem] max-h-16 w-auto h-auto rounded-lg transition-all duration-300 object-contain dark:brightness-90" />}
+                            <div class="min-w-0 flex-1">
+                                <h3 class="text-xl font-bold text-[hsl(var(--theme-link))]">
+                                    <a href="https://compas.cs.stonybrook.edu/" target="_blank" rel="noopener noreferrer" class="hover:underline break-words">
+                                        Stony Brook University COMPAS Lab: MLISA
+                                    </a>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-[hsl(var(--theme-text))] break-words">
+                        Compiler/Architecture/Machine Learning, Cpp/LLVM/Python/Torch/MLIR/Cuda
+                    </p>
+                </div>
+                <div class="project-details hidden">
+                    <p class="break-words">Served as the project lead on research initiative incorporating multiple graduate students. Focused on developing <em>novel compiler infrastructure and architecture</em> for machine learning acceleration hardware. </p>
+                    <ul class="list-disc list-inside mt-2 break-words">
                         <li>Work began as a <em>Simons Fellow</em> (competitive research fellowship with a &lt;4% acceptance rate)</li>
                         <li>Continued as a <em>full-time paid Research Assistant</em></li>
                         <li> Supervised by professor Mike Ferdman in collaboration with Professor Peter Milder (SBU) and Prasanth Chatarasi (IBM). Thanks to SUNY and IBM for funding this research.</li>
@@ -48,27 +49,29 @@ const meta = {
             </li>
 
             {/* UMich - Regular */}
-            <li class="p-2 shadow-sm "
+            <li class="project-item p-2 shadow-sm w-full cursor-pointer transition-shadow duration-300 hover:shadow-md"
+                data-project-key="umich"
                 style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 4px 2px 4px hsl(var(--theme-shadow));">
-                <h3 class="text-base font-semibold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
-                    {"/umich_logo.png" && <img src="/umich_logo.png" alt="FP Lab interface screenshot" class="max-w-[6rem] max-h-12 w-auto h-auto mr-2 rounded-lg transition-all duration-300 object-contain dark:brightness-90" />}
-                    <a href="https://tylr.fun/melds/" target="_blank" rel="noopener noreferrer" class="hover:underline">
-                        University of Michigan Future of Programming Lab
-                    </a>
-                    <button class="project-toggle-arrow text-[hsl(var(--theme-text))] text-xl font-bold leading-none select-none ml-2" data-project-id="umich" aria-expanded="false" aria-controls="umich-details">
-                        <span class="open-arrow hidden">&#9660;</span>
-                        <span class="closed-arrow">&#9658;</span>
-                    </button>
-                </h3>
-                <p class="text-xs text-[hsl(var(--theme-text))] mt-1">
-                    Programming Language Theory, Ocaml/Reason/Menhir
-                </p>
-                <div id="umich-details" class="hidden mt-2 text-[hsl(var(--theme-text))] text-sm">
-                    {"" && <div class="my-4 mx-auto max-w-[200px]">
-                        <img src="" alt="FP Lab interface screenshot" class="rounded-xl shadow-lg w-full h-auto object-contain dark:invert dark:brightness-90" />
-                    </div>}
-                    <p><em>First high school lab member</em> working in Professor Cyrus Omar's FP Lab</p>
-                    <ul class="list-disc list-inside mt-2">
+                <div class="w-full">
+                    <div class="flex items-start justify-between gap-2 mb-1 w-full">
+                        <div class="flex items-center gap-2 min-w-0 flex-1">
+                            {"/umich_logo.png" && <img src="/umich_logo.png" alt="FP Lab interface screenshot" class="flex-shrink-0 max-w-[6rem] max-h-12 w-auto h-auto rounded-lg transition-all duration-300 object-contain dark:brightness-90" />}
+                            <div class="min-w-0 flex-1">
+                                <h3 class="text-base font-semibold text-[hsl(var(--theme-link))]">
+                                    <a href="https://tylr.fun/melds/" target="_blank" rel="noopener noreferrer" class="hover:underline break-words">
+                                        University of Michigan Future of Programming Lab
+                                    </a>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-[hsl(var(--theme-text))] break-words">
+                        Programming Language Theory, Ocaml/Reason/Menhir
+                    </p>
+                </div>
+                <div class="project-details hidden">
+                    <p class="break-words"><em>First high school lab member</em> working in Professor Cyrus Omar's FP Lab</p>
+                    <ul class="list-disc list-inside mt-2 break-words">
                         <li>Collaborated with PhD students on thesis projects to develop computer science education software.</li>
                         <li>The software developed is currently used in multiple university courses.</li>
                         <li>Investigated tile-based editors and languages.</li>
@@ -77,27 +80,29 @@ const meta = {
             </li>
 
             {/* NYU - Regular */}
-            <li class="p-2 shadow-sm"
+            <li class="project-item p-2 shadow-sm w-full cursor-pointer transition-shadow duration-300 hover:shadow-md"
+                data-project-key="nyu"
                 style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 4px 2px 4px hsl(var(--theme-shadow));">
-                <h3 class="text-base font-semibold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
-                    {"/nyu_logo.png" && <img src="/nyu_logo.png" alt="Physics simulation visualization" class="max-w-[6rem] max-h-12 w-auto h-auto mr-2 rounded-lg transition-all duration-300 object-contain dark:brightness-90" />}
-                    <a href="https://journals.aps.org/pre/abstract/10.1103/PhysRevE.110.034122" target="_blank" rel="noopener noreferrer" class="hover:underline">
-                        New York University Martiniani Lab
-                    </a>
-                    <button class="project-toggle-arrow text-[hsl(var(--theme-text))] text-xl font-bold leading-none select-none ml-2" data-project-id="nyu" aria-expanded="false" aria-controls="nyu-details">
-                        <span class="open-arrow hidden">&#9660;</span>
-                        <span class="closed-arrow">&#9658;</span>
-                    </button>
-                </h3>
-                <p class="text-xs text-[hsl(var(--theme-text))] mt-1">
-                Computational Physics, Rust/HPC/Parallelization 
-                </p>
-                <div id="nyu-details" class="hidden mt-2 text-[hsl(var(--theme-text))] text-sm">
-                    {"" && <div class="my-4 mx-auto max-w-[200px]">
-                        <img src="" alt="Physics simulation visualization" class="rounded-xl shadow-lg w-full h-auto object-contain dark:invert dark:brightness-90" />
-                    </div>}
-                    <p>I studied graduate-level theoretical physics algorithms with Professor Stefano Martiniani and post-doctoral researcher Mathias Kasiulis</p>
-                    <ul class="list-disc list-inside mt-2">
+                <div class="w-full">
+                    <div class="flex items-start justify-between gap-2 mb-1 w-full">
+                        <div class="flex items-center gap-2 min-w-0 flex-1">
+                            {"/nyu_logo.png" && <img src="/nyu_logo.png" alt="Physics simulation visualization" class="flex-shrink-0 max-w-[6rem] max-h-12 w-auto h-auto rounded-lg transition-all duration-300 object-contain dark:brightness-90" />}
+                            <div class="min-w-0 flex-1">
+                                <h3 class="text-base font-semibold text-[hsl(var(--theme-link))]">
+                                    <a href="https://journals.aps.org/pre/abstract/10.1103/PhysRevE.110.034122" target="_blank" rel="noopener noreferrer" class="hover:underline break-words">
+                                        New York University Martiniani Lab
+                                    </a>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-[hsl(var(--theme-text))] break-words">
+                    Computational Physics, Rust/HPC/Parallelization 
+                    </p>
+                </div>
+                <div class="project-details hidden">
+                    <p class="break-words">I studied graduate-level theoretical physics algorithms with Professor Stefano Martiniani and post-doctoral researcher Mathias Kasiulis</p>
+                    <ul class="list-disc list-inside mt-2 break-words">
                         <li>Developed a <em>nested-sampling algorithm</em> in the <strong>Rust language</strong> for use in multiple physics research labs.</li>
                     </ul>
                 </div>
@@ -105,29 +110,31 @@ const meta = {
         </ul>
 
         <h2 class="text-2xl font-bold mt-8 mb-4 text-[hsl(var(--theme-text))]">Independent Projects</h2>
-        <ul class="list-none space-y-4">
+        <ul class="list-none space-y-4 max-w-full w-full">
             {/* SWO - Standout Project */}
-            <li class="p-4 shadow-md"
+            <li class="project-item p-4 shadow-md w-full cursor-pointer transition-shadow duration-300 hover:shadow-lg"
+                data-project-key="swo"
                 style="background-color: hsl(var(--theme-accent) / 0.15); box-shadow: 4px 6px 12px hsl(var(--theme-shadow));">
-                <h3 class="text-xl font-bold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
-                    {"" && <img src="" alt="SWO language example code" class="max-w-[8rem] max-h-16 w-auto h-auto mr-3 rounded-lg transition-all duration-300 object-contain dark:brightness-90" />}
-                    <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4661607" target="_blank" rel="noopener noreferrer" class="hover:underline">
-                        SWO Wants Options (SWO)
-                    </a>
-                    <button class="project-toggle-arrow text-[hsl(var(--theme-text))] text-2xl font-bold leading-none select-none ml-2" data-project-id="swo" aria-expanded="false" aria-controls="swo-details">
-                        <span class="open-arrow hidden">&#9660;</span> {/* Down arrow */}
-                        <span class="closed-arrow">&#9658;</span> {/* Right arrow */}
-                    </button>
-                </h3>
-                <p class="text-sm text-[hsl(var(--theme-text))] mt-1">
-                     STS/ISEF, Compilers/C#/LLVM
-                </p>
-                <div id="swo-details" class="hidden mt-3 text-[hsl(var(--theme-text))]">
-                    {"" && <div class="my-4 mx-auto max-w-[200px]">
-                        <img src="" alt="SWO language example code" class="rounded-xl shadow-lg w-full h-auto object-contain dark:invert dark:brightness-90" />
-                    </div>}
-                    <p>Was feeling a bit curious and went down a (years long) rabbit hole. Ended up building a general-purpose compiled programming language designed for use in computer science education. This project involved <em>self-teaching graduate-level CS</em> for compiler development.</p>
-                    <ul class="list-disc list-inside mt-2">
+                <div class="w-full">
+                    <div class="flex items-start justify-between gap-3 mb-1 w-full">
+                        <div class="flex items-center gap-3 min-w-0 flex-1">
+                            {"" && <img src="" alt="SWO language example code" class="flex-shrink-0 max-w-[8rem] max-h-16 w-auto h-auto rounded-lg transition-all duration-300 object-contain dark:brightness-90" />}
+                            <div class="min-w-0 flex-1">
+                                <h3 class="text-xl font-bold text-[hsl(var(--theme-link))]">
+                                    <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4661607" target="_blank" rel="noopener noreferrer" class="hover:underline break-words">
+                                        SWO Wants Options (SWO)
+                                    </a>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-[hsl(var(--theme-text))] break-words">
+                         STS/ISEF, Compilers/C#/LLVM
+                    </p>
+                </div>
+                <div class="project-details hidden">
+                    <p class="break-words">Was feeling a bit curious and went down a (years long) rabbit hole. Ended up building a general-purpose compiled programming language designed for use in computer science education. This project involved <em>self-teaching graduate-level CS</em> for compiler development.</p>
+                    <ul class="list-disc list-inside mt-2 break-words">
                         <li>Received the <strong>3rd Place Grand Award</strong> in the <em>International Science and Engineering Fair</em> (ISEF).</li>
                         <li>Recognized as a <strong>Regeneron Science Talent Search</strong> (STS) <em>Top 300 Scholar</em> in America's oldest and most prestigious science competition.</li>
                     </ul>
@@ -135,75 +142,84 @@ const meta = {
             </li>
 
             {/* Safe Water Operation - Regular */}
-            <li class="p-2 shadow-sm "
+            <li class="project-item p-2 shadow-sm w-full cursor-pointer transition-shadow duration-300 hover:shadow-md"
+                data-project-key="safewater"
                 style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 4px 2px 4px hsl(var(--theme-shadow));">
-                <h3 class="text-base font-semibold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
-                    {"" && <img src="" alt="Water quality app interface" class="max-w-[6rem] max-h-12 mr-2 rounded-lg transition-all duration-300 object-contain dark:brightness-90" />}
-                    <a href="https://www.congressionalappchallenge.us/23-ny01/" target="_blank" rel="noopener noreferrer" class="hover:underline">
-                        Safe Water Operation
-                    </a>
-                    <button class="project-toggle-arrow text-[hsl(var(--theme-text))] text-xl font-bold leading-none select-none ml-2" data-project-id="safe-water" aria-expanded="false" aria-controls="safe-water-details">
-                        <span class="open-arrow hidden">&#9660;</span>
-                        <span class="closed-arrow">&#9658;</span>
-                    </button>
-                </h3>
-                <p class="text-xs text-[hsl(var(--theme-text))] mt-1">
-                    Congressional App, Webdev/JS/React
-                </p>
-                <div id="safe-water-details" class="hidden mt-2 text-[hsl(var(--theme-text))] text-sm">
-                    {"" && <div class="my-4 mx-auto max-w-[200px]">
-                        <img src="" alt="Water quality app interface" class="rounded-xl shadow-lg w-full h-auto object-contain dark:invert dark:brightness-90" />
-                    </div>}
-                    <p>Developed an app that allows Long Island residents to quickly and easily check the <em>real-time quality</em> of their local bodies of water and understand safety through <em>generative AI integration</em>l; won the <strong>Congressional App Challenge</strong></p>
+                <div class="w-full">
+                    <div class="flex items-start justify-between gap-2 mb-1 w-full">
+                        <div class="flex items-center gap-2 min-w-0 flex-1">
+                            {"" && <img src="" alt="Water quality app interface" class="flex-shrink-0 max-w-[6rem] max-h-12 mr-2 rounded-lg transition-all duration-300 object-contain dark:brightness-90" />}
+                            <div class="min-w-0 flex-1">
+                                <h3 class="text-base font-semibold text-[hsl(var(--theme-link))]">
+                                    <a href="https://www.congressionalappchallenge.us/23-ny01/" target="_blank" rel="noopener noreferrer" class="hover:underline break-words">
+                                        Safe Water Operation
+                                    </a>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-[hsl(var(--theme-text))] break-words">
+                        Congressional App, Webdev/JS/React
+                    </p>
+                </div>
+                <div class="project-details hidden">
+                    <p class="break-words">Developed an app that allows Long Island residents to quickly and easily check the <em>real-time quality</em> of their local bodies of water and understand safety through <em>generative AI integration</em>l; won the <strong>Congressional App Challenge</strong></p>
                 </div>
             </li>
 
             {/* Greenvim - Regular */}
-            <li class="p-2 shadow-sm"
+            <li class="project-item p-2 shadow-sm w-full cursor-pointer transition-shadow duration-300 hover:shadow-md"
+                data-project-key="greenvim"
                 style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 4px 2px 4px hsl(var(--theme-shadow));">
-                <h3 class="text-base font-semibold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
-                    {"" && <img src="" alt="Greenvim editor screenshot" class="max-w-[6rem] max-h-12 mr-2 rounded-lg transition-all duration-300 object-contain dark:brightness-90" />}
-                    <a href="https://github.com/green726/greenvim/tree/2025_n32" target="_blank" rel="noopener noreferrer" class="hover:underline">
-                        Greenvim
-                    </a>
-                    <button class="project-toggle-arrow text-[hsl(var(--theme-text))] text-xl font-bold leading-none select-none ml-2" data-project-id="greenvim" aria-expanded="false" aria-controls="greenvim-details">
-                        <span class="open-arrow hidden">&#9660;</span>
-                        <span class="closed-arrow">&#9658;</span>
-                    </button>
-                </h3>
-                <p class="text-xs text-[hsl(var(--theme-text))] mt-1">
-                    Lua/Linux/Sysadmin
-                </p>
-                <div id="greenvim-details" class="hidden mt-2 text-[hsl(var(--theme-text))] text-sm">
-                    {"" && <div class="my-4 mx-auto max-w-[200px]">
-                        <img src="" alt="Greenvim editor screenshot" class="rounded-xl shadow-lg w-full h-auto object-contain dark:invert dark:brightness-90" />
-                    </div>}
-                    <p>Just my Neovim config in eternal development for ~5 years. "I use vim btw"</p>
+                <div class="w-full">
+                    <div class="flex items-start justify-between gap-2 mb-1 w-full">
+                        <div class="flex items-center gap-2 min-w-0 flex-1">
+                            {"" && <img src="" alt="Greenvim editor screenshot" class="flex-shrink-0 max-w-[6rem] max-h-12 mr-2 rounded-lg transition-all duration-300 object-contain dark:brightness-90" />}
+                            <div class="min-w-0 flex-1">
+                                <h3 class="text-base font-semibold text-[hsl(var(--theme-link))]">
+                                    <a href="https://github.com/green726/greenvim/tree/2025_n32" target="_blank" rel="noopener noreferrer" class="hover:underline break-words">
+                                        Greenvim
+                                    </a>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-[hsl(var(--theme-text))] break-words">
+                        Lua/Linux/Sysadmin
+                    </p>
+                </div>
+                <div class="project-details hidden">
+                    <p class="break-words">Just my Neovim config in eternal development for ~5 years. "I use vim btw"</p>
                 </div>
             </li>
         </ul>
 
         <h2 class="text-2xl font-bold mt-8 mb-4 text-[hsl(var(--theme-text))]">Other Projects</h2>
-        <ul class="list-none space-y-4">
+        <ul class="list-none space-y-4 max-w-full w-full">
             {/* Lemelson-MIT InvenTeam - Standout Project */}
-            <li class="p-4 shadow-md"
+            <li class="project-item p-4 shadow-md w-full cursor-pointer transition-shadow duration-300 hover:shadow-lg"
+                data-project-key="lemelson"
                 style="background-color: hsl(var(--theme-accent) / 0.15); box-shadow: 4px 6px 12px hsl(var(--theme-shadow));">
-                <h3 class="text-xl font-bold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
-                    {"" && <img src="" alt="InvenTeam device prototype" class="w-32 h-16 mr-3 rounded-lg transition-all duration-300 object-cover dark:brightness-90" />}
-                    <a href="https://lemelson.mit.edu/teams/cold-spring-harbor-juniorsenior-inventeam" target="_blank" rel="noopener noreferrer" class="hover:underline">
-                        Lemelson-MIT InvenTeam
-                    </a>
-                    <button class="project-toggle-arrow text-[hsl(var(--theme-text))] text-2xl font-bold leading-none select-none ml-2" data-project-id="inventeam" aria-expanded="false" aria-controls="inventeam-details">
-                        <span class="open-arrow hidden">&#9660;</span> {/* Down arrow */}
-                        <span class="closed-arrow">&#9658;</span> {/* Right arrow */}
-                    </button>
-                </h3>
-                <p class="text-sm text-[hsl(var(--theme-text))] mt-1">
-                    Manufcaturing/Biology/Business/Design
-                </p>
-                <div id="inventeam-details" class="hidden mt-3 text-[hsl(var(--theme-text))]">
-                    <p>President & founder of a <strong>$60k+ grant-winning MIT InvenTeam</strong> dedicated to solving the problem of <em>tick overpopulation</em> on Long Island.</p>
-                    <ul class="list-disc list-inside mt-2">
+                <div class="w-full">
+                    <div class="flex items-start justify-between gap-3 mb-1 w-full">
+                        <div class="flex items-center gap-3 min-w-0 flex-1">
+                            {"" && <img src="" alt="InvenTeam device prototype" class="flex-shrink-0 w-32 h-16 rounded-lg transition-all duration-300 object-cover dark:brightness-90" />}
+                            <div class="min-w-0 flex-1">
+                                <h3 class="text-xl font-bold text-[hsl(var(--theme-link))]">
+                                    <a href="https://lemelson.mit.edu/teams/cold-spring-harbor-juniorsenior-inventeam" target="_blank" rel="noopener noreferrer" class="hover:underline break-words">
+                                        Lemelson-MIT InvenTeam
+                                    </a>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-[hsl(var(--theme-text))] break-words">
+                        Manufcaturing/Biology/Business/Design
+                    </p>
+                </div>
+                <div class="project-details hidden">
+                    <p class="break-words">President & founder of a <strong>$60k+ grant-winning MIT InvenTeam</strong> dedicated to solving the problem of <em>tick overpopulation</em> on Long Island.</p>
+                    <ul class="list-disc list-inside mt-2 break-words">
                         <li>Researched tick behavior and attractants in collaboration with the <em>Suffolk County government</em>.</li>
                         <li>Designed a <em>novel 3D-printed tick deterrence/trapping device</em>.</li>
                         <li>Presented our work to government officials and at MIT.</li>
@@ -212,103 +228,220 @@ const meta = {
             </li>
 
             {/* NHRL - Regular (stay same) */}
-            <li class="p-2 shadow-sm"
+            <li class="project-item p-2 shadow-sm w-full cursor-pointer transition-shadow duration-300 hover:shadow-md"
+                data-project-key="nhrl"
                 style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 4px 2px 4px hsl(var(--theme-shadow));">
-                <h3 class="text-base font-semibold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
-                    <a href="https://www.nhrl.io/" target="_blank" rel="noopener noreferrer" class="hover:underline">
-                        NHRL Combat Robotics
-                    </a>
-                    <button class="project-toggle-arrow text-[hsl(var(--theme-text))] text-xl font-bold leading-none select-none ml-2" data-project-id="nhrl" aria-expanded="false" aria-controls="nhrl-details">
-                        <span class="open-arrow hidden">&#9660;</span>
-                        <span class="closed-arrow">&#9658;</span>
-                    </button>
-                </h3>
-                <p class="text-xs text-[hsl(var(--theme-text))] mt-1">
-                    3d-Printing/CAD/Manufacturing
-                </p>
-                <div id="nhrl-details" class="hidden mt-2 text-[hsl(var(--theme-text))] text-sm">
-                    I was part of the only all-high school NHRL team competing in an international competition, featuring a novel design that inspired other larger teams.
+                <div class="w-full">
+                    <div class="flex items-start justify-between gap-2 mb-1 w-full">
+                        <div class="flex items-center gap-2 min-w-0 flex-1">
+                            <div class="min-w-0 flex-1">
+                                <h3 class="text-base font-semibold text-[hsl(var(--theme-link))]">
+                                    <a href="https://www.nhrl.io/" target="_blank" rel="noopener noreferrer" class="hover:underline break-words">
+                                        NHRL Combat Robotics
+                                    </a>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-[hsl(var(--theme-text))] break-words">
+                        3d-Printing/CAD/Manufacturing
+                    </p>
+                </div>
+                <div class="project-details hidden">
+                    <p class="break-words">I was part of the only all-high school NHRL team competing in an international competition, featuring a novel design that inspired other larger teams.</p>
                 </div>
             </li>
 
             {/* FRC - Regular (stay same) */}
-            <li class="p-2 shadow-sm"
+            <li class="project-item p-2 shadow-sm w-full cursor-pointer transition-shadow duration-300 hover:shadow-md"
+                data-project-key="frc"
                 style="background-color: hsl(var(--theme-bg-callout)); box-shadow: 4px 2px 4px hsl(var(--theme-shadow));">
-                <h3 class="text-base font-semibold text-[hsl(var(--theme-link))] hover:text-[hsl(var(--theme-link))] dark:hover:text-[hsl(var(--theme-accent))] flex justify-between items-center">
-                    <a href="https://github.com/CshCyberhawks" target="_blank" rel="noopener noreferrer" class="hover:underline">
-                        FRC Robotics Team
-                    </a>
-                    <button class="project-toggle-arrow text-[hsl(var(--theme-text))] text-xl font-bold leading-none select-none ml-2" data-project-id="frc" aria-expanded="false" aria-controls="frc-details">
-                        <span class="open-arrow hidden">&#9660;</span>
-                        <span class="closed-arrow">&#9658;</span>
-                    </button>
-                </h3>
-                <p class="text-xs text-[hsl(var(--theme-text))] mt-1">
-                Co-Captain, Java/Kotlin/Fabrication/CAD/Design
-                </p>
-                <div id="frc-details" class="hidden mt-2 text-[hsl(var(--theme-text))] text-sm">
-                    As co-captain, I built a custom swerve drivetrain complete with no-accelerometer odometry, PIDs, field orientation, and a self-correcting motion-profiled autonomous mode.
+                <div class="w-full">
+                    <div class="flex items-start justify-between gap-2 mb-1 w-full">
+                        <div class="flex items-center gap-2 min-w-0 flex-1">
+                            <div class="min-w-0 flex-1">
+                                <h3 class="text-base font-semibold text-[hsl(var(--theme-link))]">
+                                    <a href="https://github.com/CshCyberhawks" target="_blank" rel="noopener noreferrer" class="hover:underline break-words">
+                                        FRC Robotics Team
+                                    </a>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-[hsl(var(--theme-text))] break-words">
+                    Co-Captain, Java/Kotlin/Fabrication/CAD/Design
+                    </p>
+                </div>
+                <div class="project-details hidden">
+                    <p class="break-words">As co-captain, I built a custom swerve drivetrain complete with no-accelerometer odometry, PIDs, field orientation, and a self-correcting motion-profiled autonomous mode.</p>
                 </div>
             </li>
         </ul>
 
     </div>
+
+    <!-- Modal Structure -->
+    <div id="project-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center p-4 z-50">
+        <div id="modal-content" class="bg-[hsl(var(--theme-bg))] max-w-3xl w-full rounded-lg shadow-xl p-6 relative max-h-[90vh] overflow-y-auto">
+        <TerminalAnimation />
+            <button id="modal-close-btn" class="absolute top-3 right-3 text-3xl font-bold text-[hsl(var(--theme-text))] leading-none hover:text-red-500">&times;</button>
+            <div id="modal-body" class="mt-4">
+                <!-- Content will be injected here -->
+            </div>
+        </div>
+    </div>
 </PageLayout>
+
+<style>
+    #project-modal.flex {
+        display: flex;
+    }
+</style>
 
 <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
-        // Add transition class when toggling
-        const toggleDetails = (detailsDiv, projectListItem) => {
-            detailsDiv.classList.toggle('hidden');
-            projectListItem.classList.toggle('expanded');
+        const modal = document.getElementById('project-modal');
+        const modalBody = document.getElementById('modal-body');
+        const closeModalBtn = document.getElementById('modal-close-btn');
+
+        const projectCommands = {
+            mlisa: [
+                'clang++ -S -emit-llvm main.cpp -o main.ll',
+                'opt -load-pass-plugin=./mypass.so --passes=my-pass main.ll',
+                'python train_model.py --arch=transformer',
+                'nvcc -arch=sm_86 kernel.cu -o kernel',
+                'mlir-opt --linalg-fusion pass.mlir',
+                'mlisa_compiler input.mlir riscv64 asm --shape-opts --split-weights'
+            ],
+            umich: [
+                'ocamlc -c parser.mli',
+                'dune build @fmt --auto-promote',
+                'menhir --list-errors parser.mly',
+                'opam install core utop',
+                'node my_reason_script.bs.js',
+            ],
+            nyu: [
+                'cargo run --release -- --input params.json',
+                'python graph.py --data results.csv',
+                'perf record --call-graph dwarf ./target/release/simulation',
+                'echo "use rayon::prelude::*;" >> src/main.rs',
+            ],
+            swo: [
+                'dotnet build SWO.sln -c Release',
+                'mono swo.exe my_program.swo',
+                'llc -filetype=obj -o module.o module.ll',
+                'ld.lld module.o -o a.out',
+                './a.out',
+            ],
+            safewater: [
+                'npm start',
+                "fetch('https://api.waterdata.gov/...')",
+                'npx create-react-app water-quality-app',
+                'git commit -m "feat: add data visualization"',
+                'console.log("Water quality is good")',
+            ],
+            greenvim: [
+                "nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'",
+                'lua my_plugin_config.lua',
+                'ps aux | grep nvim',
+                'git rebase -i HEAD~5',
+                'sudo pacman -Syu',
+            ],
+            lemelson: [
+                'openscad -o trap.stl trap.scad',
+                'grep "butanoic" ticks.csv',
+                'python analyze_data.py --input sensor_readings.csv',
+                'make presentation.pdf',
+            ],
+            nhrl: [
+                'cura -s "profile.curaprofile" bot_part.stl',
+                'sudo systemctl start klipper',
+                'git commit -m "update chassis v3.2"',
+                'ansys-workbench -B -i simulation.wbjn',
+                'freecad bot_design.FCStd',
+            ],
+            frc: [
+                './gradlew build',
+                'kotlinc SwerveModule.kt -include-runtime -d SwerveModule.jar',
+                'java -jar FRC-driver-station.jar',
+                'git cherry-pick autonomous-fix',
+                'ssh roborio "deploy"',
+            ],
         };
-        document.querySelectorAll('li').forEach(projectListItem => {
-            // Find the toggle button and details div within THIS specific list item
-            const toggleButton = projectListItem.querySelector('.project-toggle-arrow');
-            const detailsDiv = projectListItem.querySelector('.hidden[id$="-details"]');
-            const projectLink = projectListItem.querySelector('h3 a'); // The actual link element
 
-            if (toggleButton && detailsDiv && projectLink) {
-                // Function to update the arrow direction and ARIA attribute
-                const updateArrow = () => {
-                    const isOpen = !detailsDiv.classList.contains('hidden');
-                    if (isOpen) {
-                        toggleButton.querySelector('.open-arrow').classList.remove('hidden');
-                        toggleButton.querySelector('.closed-arrow').classList.add('hidden');
-                        toggleButton.setAttribute('aria-expanded', 'true');
-                    } else {
-                        toggleButton.querySelector('.open-arrow').classList.add('hidden');
-                        toggleButton.querySelector('.closed-arrow').classList.remove('hidden');
-                        toggleButton.setAttribute('aria-expanded', 'false');
-                    }
-                };
+        let defaultCommands = null;
 
-                // Initial arrow state (closed by default)
-                updateArrow();
+        const getTerminal = () => document.getElementById('terminal');
 
-                // Click event for the entire list item (excluding the link)
-                projectListItem.addEventListener('click', (event) => {
-                    // If the click originated from the link or any of its children, do nothing (let the link handle it)
-                    if (projectLink.contains(event.target) || event.target === projectLink) {
+        const ensureDefaultCommands = () => {
+            if (defaultCommands === null) {
+                const terminal = getTerminal();
+                if (terminal && terminal.commands) {
+                    defaultCommands = [...terminal.commands];
+                } else {
+                    // Fallback, though it shouldn't be needed if we wait for a click
+                    defaultCommands = []; 
+                }
+            }
+        };
+
+        const openModal = (detailsContent, commands) => {
+            modalBody.innerHTML = detailsContent.innerHTML;
+            ensureDefaultCommands();
+            
+            const terminal = getTerminal();
+            if (terminal) {
+                if (commands && commands.length > 0) {
+                    terminal.commands = commands;
+                } else {
+                    terminal.commands = defaultCommands;
+                }
+                if (terminal.startAnimation) {
+                    terminal.startAnimation();
+                }
+            }
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        };
+
+        const closeModal = () => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            modalBody.innerHTML = '';
+            
+            const terminal = getTerminal();
+            if (terminal && defaultCommands) {
+                terminal.commands = defaultCommands;
+            }
+        };
+
+        document.querySelectorAll('.project-item').forEach(item => {
+            const details = item.querySelector('.project-details');
+            const projectKey = item.dataset.projectKey;
+            const commands = projectCommands[projectKey];
+
+            if (details) {
+                item.addEventListener('click', (event) => {
+                    if (event.target.closest('a')) {
                         return;
                     }
-
-                    // If the click originated from the toggle button or its children, do nothing (button's listener will handle it)
-                    if (toggleButton.contains(event.target) || event.target === toggleButton) {
-                        return;
-                    }
-
-                    // Otherwise, toggle the details
-                    toggleDetails(detailsDiv, projectListItem);
-                    updateArrow(); // Update arrow after toggling
+                    openModal(details, commands);
                 });
+            }
+        });
 
-                // Click event for the specific toggle button
-                toggleButton.addEventListener('click', (event) => {
-                    event.stopPropagation(); // Stop the click from bubbling up to the li
-                    detailsDiv.classList.toggle('hidden');
-                    updateArrow(); // Update arrow after toggling
-                });
+        closeModalBtn.addEventListener('click', closeModal);
+
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeModal();
             }
         });
     });
