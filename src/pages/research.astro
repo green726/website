@@ -307,11 +307,11 @@ const meta = {
         const projectCommands = {
             mlisa: [
                 'clang++ -S -emit-llvm main.cpp -o main.ll',
-                'opt -load-pass-plugin=./mypass.so --passes=my-pass main.ll',
+                'opt -load-pass-plugin=./mypass.so main.ll',
                 'python train_model.py --arch=transformer',
                 'nvcc -arch=sm_86 kernel.cu -o kernel',
                 'mlir-opt --linalg-fusion pass.mlir',
-                'mlisa_compiler input.mlir riscv64 asm --shape-opts --split-weights'
+                'mlisa_compiler input.mlir riscv64 asm --shape-opts'
             ],
             umich: [
                 'ocamlc -c parser.mli',
@@ -323,7 +323,7 @@ const meta = {
             nyu: [
                 'cargo run --release -- --input params.json',
                 'python graph.py --data results.csv',
-                'perf record --call-graph dwarf ./target/release/simulation',
+                'perf record ./target/release/simulation',
                 'echo "use rayon::prelude::*;" >> src/main.rs',
             ],
             swo: [
@@ -341,7 +341,7 @@ const meta = {
                 'console.log("Water quality is good")',
             ],
             greenvim: [
-                "nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'",
+                "nvim --headless -c 'autocmd User",
                 'lua my_plugin_config.lua',
                 'ps aux | grep nvim',
                 'git rebase -i HEAD~5',
@@ -350,7 +350,7 @@ const meta = {
             lemelson: [
                 'openscad -o trap.stl trap.scad',
                 'grep "butanoic" ticks.csv',
-                'python analyze_data.py --input sensor_readings.csv',
+                'python analyze_data.py --input',
                 'make presentation.pdf',
             ],
             nhrl: [
@@ -362,7 +362,7 @@ const meta = {
             ],
             frc: [
                 './gradlew build',
-                'kotlinc SwerveModule.kt -include-runtime -d SwerveModule.jar',
+                'kotlinc SwerveModule.kt -include-runtime',
                 'java -jar FRC-driver-station.jar',
                 'git cherry-pick autonomous-fix',
                 'ssh roborio "deploy"',

@@ -110,9 +110,9 @@
 
       // MLIR (Multi-Level IR) Commands
       "clang -S -emit-mlir main.c -o main.mlir", // (Conceptual) Emit MLIR from C code - requires specific Clang builds
-      "mlir-opt --pass-pipeline='builtin.func(linalg-bufferize,convert-linalg-to-loops)' main.mlir", // Apply an optimization pass pipeline
+      "mlir-opt --pass-pipeline='bufferize' main.mlir", // Apply an optimization pass pipeline
       "mlir-translate --mlir-to-llvmir main.mlir", // Translate MLIR to LLVM IR
-      "mlir-tblgen -gen-op-defs -I /path/to/mlir/include my_dialect.td", // Generate C++ operation definitions from a TableGen file
+      "mlir-tblgen -gen-op-defs -I /include.h mine.td", // Generate C++ operation definitions from a TableGen file
     ];
 
     let commandIndex = 0;
