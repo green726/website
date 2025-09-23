@@ -33,24 +33,23 @@
     if (!terminalText || !cursor || !terminal) return;
 
     terminal.commands = [
-      // Original Commands
+        // Original Commands
       "git status",
       "astro build",
       "tcc -run main.c",
       "curl -L https://lustig.dev",
-      "gcc -o main main.c -O3 -march=native",
-      "cat /proc/cpuinfo | grep 'model name'",
+      "gcc -o main main.c -march=native",
+      "cat /proc/cpuinfo | grep 'name'",
 
       // GCC / Clang Compiler Commands
-      "clang -o app main.c -Wall -Wextra -g",
+      "clang -o app main.c -Wall -g",
       "g++ -std=c++20 -o app main.cpp",
       "gcc -S -O2 main.c -o main.s",
       "gcc -E main.c -o main.i",
 
       // LLVM Toolchain Commands
-      "clang -S -emit-llvm main.c -o main.ll",
-      "clang -c -emit-llvm main.c -o main.bc",
-      "opt -S -O3 main.ll -o main.opt.ll",
+      "clang -c -emit-llvm main.c",
+      "opt -S main.ll -o main.opt.ll",
       "llc main.ll -o main.s",
       "lli main.ll",
       "llvm-dis < main.bc > main.ll",
@@ -58,7 +57,7 @@
 
       // Build Systems
       "make clean && make",
-      "cmake -B build && cmake --build build",
+      "cmake -B build && cmake --build",
       "ninja -C build",
 
       // Profiling & Tracing
@@ -82,7 +81,7 @@
 
       // More Git
       "git diff --staged",
-      "git log --oneline --graph --decorate",
+      "git log --oneline --graph",
 
       // --- Added Commands ---
 
@@ -101,18 +100,18 @@
       // LLDB (LLVM Debugger) Commands
       "lldb ./main",                            // Start LLDB
       "process launch -- -arg1 val1",           // Launch the process with arguments within LLDB
-      "breakpoint set --file main.c --line 42", // Set a breakpoint (equivalent to `b main.c:42`)
-      "watchpoint set variable my_variable",    // Set a watchpoint on a variable
+      "breakpoint set --file main.c", // Set a breakpoint (equivalent to `b main.c:42`)
+      "watchpoint set variable var",    // Set a watchpoint on a variable
       "frame variable my_variable",             // Print variables in the current stack frame
       "bt",                                     // Show the call stack (backtrace)
       "disassemble --frame",                    // Disassemble the current function
       "expression my_variable = 20",            // Change a variable's value during a debug session
 
       // MLIR (Multi-Level IR) Commands
-      "clang -S -emit-mlir main.c -o main.mlir", // (Conceptual) Emit MLIR from C code - requires specific Clang builds
-      "mlir-opt --pass-pipeline='bufferize' main.mlir", // Apply an optimization pass pipeline
-      "mlir-translate --mlir-to-llvmir main.mlir", // Translate MLIR to LLVM IR
-      "mlir-tblgen -gen-op-defs -I /include.h mine.td", // Generate C++ operation definitions from a TableGen file
+      "clang -S -emit-mlir main.c", // (Conceptual) Emit MLIR from C code - requires specific Clang builds
+      "mlir-opt --pass-pipeline='bufferize'", // Apply an optimization pass pipeline
+      "mlir-translate --mlir-to-llvmir", // Translate MLIR to LLVM IR
+      "mlir-tblgen -gen-op-defs mine.td", // Generate C++ operation definitions from a TableGen file
     ];
 
     let commandIndex = 0;

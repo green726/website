@@ -306,12 +306,12 @@ const meta = {
 
         const projectCommands = {
             mlisa: [
-                'clang++ -S -emit-llvm main.cpp -o main.ll',
-                'opt -load-pass-plugin=./mypass.so main.ll',
-                'python train_model.py --arch=transformer',
-                'nvcc -arch=sm_86 kernel.cu -o kernel',
+                'clang++ -S -emit-llvm main.cpp',
+                'opt -load-pass=./pass main.ll',
+                'python train_model.py --arch=tr',
+                'nvcc -arch=sm_86 kernel.cu -o',
                 'mlir-opt --linalg-fusion pass.mlir',
-                'mlisa_compiler input.mlir riscv64 asm --shape-opts'
+                'mlisa_compiler input.mlir riscv64 '
             ],
             umich: [
                 'ocamlc -c parser.mli',
@@ -321,27 +321,26 @@ const meta = {
                 'node my_reason_script.bs.js',
             ],
             nyu: [
-                'cargo run --release -- --input params.json',
+                'cargo run --input params.json',
                 'python graph.py --data results.csv',
-                'perf record ./target/release/simulation',
-                'echo "use rayon::prelude::*;" >> src/main.rs',
+                'perf record ./simulation',
             ],
             swo: [
                 'dotnet build SWO.sln -c Release',
                 'mono swo.exe my_program.swo',
-                'llc -filetype=obj -o module.o module.ll',
+                'llc -filetype=obj -o module.o',
                 'ld.lld module.o -o a.out',
                 './a.out',
             ],
             safewater: [
                 'npm start',
-                "fetch('https://api.waterdata.gov/...')",
-                'npx create-react-app water-quality-app',
-                'git commit -m "feat: add data visualization"',
-                'console.log("Water quality is good")',
+                "fetch('api.waterdata.gov')",
+                'npx create-react-app water',
+                'git commit -m "data vis"',
+                'console.log("Water quality good")',
             ],
             greenvim: [
-                "nvim --headless -c 'autocmd User",
+                "nvim --headless",
                 'lua my_plugin_config.lua',
                 'ps aux | grep nvim',
                 'git rebase -i HEAD~5',
@@ -354,17 +353,17 @@ const meta = {
                 'make presentation.pdf',
             ],
             nhrl: [
-                'cura -s "profile.curaprofile" bot_part.stl',
+                'cura -s "profile.curaprofile"',
                 'sudo systemctl start klipper',
-                'git commit -m "update chassis v3.2"',
-                'ansys-workbench -B -i simulation.wbjn',
+                'git commit -m "chassis v3.2"',
+                'ansys-workbench -B sim.wbjn',
                 'freecad bot_design.FCStd',
             ],
             frc: [
                 './gradlew build',
-                'kotlinc SwerveModule.kt -include-runtime',
-                'java -jar FRC-driver-station.jar',
-                'git cherry-pick autonomous-fix',
+                'kotlinc SwerveModule.kt',
+                'java -jar FRC-driver',
+                'git cherry-pick auton-fix',
                 'ssh roborio "deploy"',
             ],
         };
