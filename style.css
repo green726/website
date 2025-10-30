@@ -71,23 +71,20 @@ a:visited {
     bottom: 10px;
     right: 10px;
 
-/* Start hidden */
   opacity: 0;
   visibility: hidden;
   
-  /* Add a nice fade-in effect */
-  transition: opacity 0.4s ease, visibility 0.4s ease;
+  transition: opacity 0.225s ease, visibility 0.225s ease;
 }
 
 .quote.show {
-  /* This class will be added by JavaScript */
   opacity: 1;
   visibility: visible;
 }
 
-/* This is our invisible marker */
 #page-bottom-marker {
-  height: 1px; /* Just needs to be 1px tall to be "seen" */
+    /* margin-top: 25px; */
+  height: 30px; 
 }
 
 .indented-p {
