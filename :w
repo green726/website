@@ -59,7 +59,7 @@ a:visited {
 }
 
 .nolink:hover {
-      text-decoration: underline;
+    text-decoration: underline;
 }
 
 .contact-table td {

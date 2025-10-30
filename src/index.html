@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milan Lustig</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>
+        <span>Milan Lustig</span>
+    </h1>
+
+    <div>
+        <a href="https://www.linkedin.com/in/milan-lustig-858871248/">LinkedIn</a> |
+        <a href="https://github.com/green726">GitHub</a> |
+        <!-- <a href="">OrcID</a> | -->
+        <a href="resume.pdf">Resume (PDF)</a>
+    </div>
+    
+    <h3>
+    <p>CS @ Harvard</p>
+    </h3>
+    <em>Contact me:</em>
+    <table cellspacing = "2" class="contact-table">
+        <tr>
+            <td>• mlustig [at] college [dot] harvard [dot] edu</td>
+        </tr>
+        <tr>
+            <td>• mlustig [at] cs [dot] stonybrook [dot] edu</td>
+        </tr>
+    </table>
+
+    <h2 id="about">About</h2>
+    <p>Currently studying Computer Science (AB/SM track) at Harvard University (Co '29). I do research in compilers, computer architecture and "low-level" systems. </p>
+
+    <h2 id="research">Research Interests</h2>
+    <p>Broadly speaking, I'm interested in changing the <em>basic thoughts, axioms, and foundations</em> behind computer systems to adapt for machine learning. More specifically, how compilers can help in bringing about these changes.<p>
+    <!-- <hr> -->
+    <p class="indented-p">
+I'm currently working as a research assistant in the COMPAS Lab at Stony Brook University under Professor Mike Ferdman, focusing on machine learning accelerator architecture and compilers. <br> 
+In the past, I've worked at the UMich Future of Programming Lab (Prof. Cyrus Omar) on parsing and live programming and the NYU Martiniani Lab (Prof. Stefano Martiniani) on computational statistical mechanics.</p>
+
+    <h2 id="projects">Projects</h2>
+    <h3 id="research">Research</h3>
+    <p><em><a href="https://compas.cs.stonybrook.edu/" class="nolink">MLISA @ SBU</a></em> --- Led the development of end-to-end ML compiler targeting our hardware-agnostic machine learning instruction set architecure (MLISA)</p>
+    <p><em><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4661607" class="nolink">Configurable Compiled Language (Independent)</a></em> --- Designed a general-purpose (customizable) programming language and built a compiler from scratch; found out that compilers are cool</p>
+    <p><em><a href="https://tylr.fun/melds/" class="nolink">Tylr & Hazel @ UMich</a></em> --- Worked on operator-precedence parsers and live functional programming environments</p>
+    <p><em><a href="https://martinianilab.org/" class="nolink">Nested Sampling @ NYU</a></em> --- Built a parallel nested-sampling algorithm in Rust; learned some stat mech</p>
+        
+    <!-- <h3 id="other">Other</h3> -->
+       
+    <div id="page-bottom-marker"></div>
+    
+    <blockquote class="quote">
+        <small>I don't believe in astrology; I'm a Sagittarius and we're skeptical.</small>
+        <footer>— Arthur C. Clarke</footer>
+    </blockquote>
+
+<script>
+  // Get the elements we need
+  const quote = document.querySelector('.quote');
+  const marker = document.querySelector('#page-bottom-marker');
+
+  // Set up the observer
+  const observer = new IntersectionObserver((entries) => {
+    // entries[0] is our #page-bottom-marker
+    // 'isIntersecting' is true when it's on screen
+    if (entries[0].isIntersecting) {
+      quote.classList.add('show');
+    } else {
+      quote.classList.remove('show');
+    }
+  });
+
+  // Tell the observer to watch our marker
+  observer.observe(marker);
+</script>
+
+</body>
+</html>
